@@ -112,4 +112,4 @@ def atualizar_databases(n, book_data, historical_data):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=8051)
+    app.run_server(debug=True, port=8050)

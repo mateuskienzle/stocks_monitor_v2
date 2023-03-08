@@ -37,3 +37,7 @@ body{
     background-color: #670067;
     border-color: #670067;
 }
+.textoTerciario{
+    font-size: 1.3rem;
+    color: white;
+}
