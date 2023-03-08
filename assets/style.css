@@ -1,0 +1,39 @@
+body{
+    background-color: #100731;
+}
+/* .home_layout{
+    background-color: red;
+} */
+.header_icon{
+    background-color : transparent;
+    border-color : transparent;
+    color : rgba(255, 255, 255, 0.6)
+}
+.header_icon:hover{
+    transition: 0.4s ease-out;
+    color: white ;
+    background-color: transparent;
+    border-color: transparent;
+}
+.cards_linha1{
+    background-color: transparent;
+    color: rgba(255,255,255,1);;
+    border: transparent;
+}
+.cards_linha2{
+    background-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.3);;
+}
+.stocks_monitor_title{
+    /* margin-bottom: 10px; */
+    font-size : 75px;
+}
+.cardRadar{
+    background-color: transparent;
+    color: white;
+    border: transparent;
+}
+.form-check-input:checked {
+    background-color: #670067;
+    border-color: #670067;
+}

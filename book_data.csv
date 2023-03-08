@@ -1,0 +1,9 @@
+,date,preco,tipo,ativo,exchange,vol,logo_url,valor_total
+0,2021-07-23T00:00:00,123,Compra,ITUB4,BMFBOVESPA,10000,https://logo.clearbit.com/itau.com.br,500
+1,2017-02-02T00:00:00,123,Compra,MGLU3,BMFBOVESPA,7500,https://logo.clearbit.com/magazineluiza.com.br,500
+2,2022-02-02T00:00:00,123,Compra,TTEN3,BMFBOVESPA,15000,https://logo.clearbit.com/ri.3tentos.com.br,500
+3,2018-02-02T00:00:00,123,Compra,VALE3,BMFBOVESPA,29000,https://logo.clearbit.com/vale.com.br,500
+4,2019-02-02T00:00:00,123,Compra,LREN3,BMFBOVESPA,50000,https://logo.clearbit.com/lojasrenner.com.br,500
+5,2022-07-22T00:00:00,123,Venda,ITUB4,BMFBOVESPA,5000,https://logo.clearbit.com/itau.com.br,500
+6,2019-07-22T00:00:00,123,Venda,MGLU3,BMFBOVESPA,2000,https://logo.clearbit.com/magazineluiza.com.br,500
+7,2020-07-22T00:00:00,123,Venda,LREN3,BMFBOVESPA,28000,https://logo.clearbit.com/lojasrenner.com.br,500
