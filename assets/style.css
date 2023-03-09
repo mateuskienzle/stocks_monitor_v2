@@ -20,57 +20,100 @@ body{
     color: rgba(255,255,255,1);;
     border: transparent;
     align-content: center;
+    padding: 2%;
 }
 .card2_linha1{
     background-color: transparent;
     color: white;
     border-color: #5d3b97;
     padding: 5%;
+    font-size: 4.7rem;
 }
 .cards_linha2{
     background-color: rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.3);;
-}
-.stocks_monitor_title{
-    color: #5d3b97;
-    font-size : 75px;
 }
 .cardRadar{
     background-color: transparent;
     color: white;
     border: transparent;
 }
+.form-check-input{
+    background-color: rgba(255,255,255,1);
+    border-color: white;
+
+}
 .form-check-input:checked {
     background-color: #5d3b97;
     border-color: #5d3b97;
-}
-.textoTerciario{
-    font-size: 1.3rem;
-    color: white;
 }
 
 /* classes que alteram o menu dropdown do line graph.
 Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dropdown, mas algumas só consegui pelo css, entao preferi alterar tudo por aqui pra centralizar as edições aqui */
 .Select-control {
-    background-color: #5d3b97 !important;
-    border-color: #5d3b97;
+    background-color: rgba(255,255,255,0.1) !important;
+    border-color: rgba(255,255,255,0.1);
     color: white;
 }
-  
-.Select-menu-outer {
-    background-color: #5d3b97;
+.is-open>.Select-control{
+    border-color: rgba(255,255,255,0.1);;
+}
+.is-focused:not(.is-open)>.Select-control{
     border-color: #5d3b97;
-    color: white;
+}
+.Select-menu-outer {
+    background-color: #201c1c;
+    border-color: rgba(255,255,255,0.1);
+    color: #5d3b97;
 }
 .Select--multi .Select-value{
-    color: white;
-    border-color: white;
+    color: #5d3b97;
+    border-color: #5d3b97;
 }
 .Select-value-icon{
-    color: white ;
-    border-color: white !important;
+    color: #5d3b97 ;
+    border-color: #5d3b97 !important;
 }
 .Select-value-icon:hover{
     color: red !important;
 }
 
+/* Aqui vou ajustar as fontes: cores, tamanhos e famlias*/
+
+.textoPrincipal{
+    font-size: 6rem;
+    color: #5d3b97;
+}
+.textoSecundario{
+    font-size: 2.4rem;
+    color: white;
+}
+.textoTerciario{
+    font-size: 1.6rem;
+    color: white;
+}
+.textoTerciarioOpaco{
+    font-size: 1.6rem;
+    color: rgba(255,255,255,0.4);
+    display: inline;
+}
+.textoQuartenario{
+    font-size: 1.4rem;
+    color: white;
+}
+.textoQuartenarioOpaco{
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.4);
+}
+
+.textoQuartenarioVerde{
+    font-size: 1.4rem;
+    color: rgba(8,180,164,1);
+}
+.textoQuartenarioVermelho{
+    font-size: 1.4rem;
+    color: rgba(255,0,0, 0.7);
+}
+h5 {
+    display: inline;
+}
