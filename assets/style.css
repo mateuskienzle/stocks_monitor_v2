@@ -1,5 +1,5 @@
 body{
-    background-color: #100731;
+    background-color: #000000;
 }
 /* .home_layout{
     background-color: red;
@@ -15,17 +15,24 @@ body{
     background-color: transparent;
     border-color: transparent;
 }
-.cards_linha1{
+.card1_linha1{
     background-color: transparent;
     color: rgba(255,255,255,1);;
     border: transparent;
+    align-content: center;
+}
+.card2_linha1{
+    background-color: transparent;
+    color: white;
+    border-color: #5d3b97;
+    padding: 5%;
 }
 .cards_linha2{
     background-color: rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.3);;
 }
 .stocks_monitor_title{
-    /* margin-bottom: 10px; */
+    color: #5d3b97;
     font-size : 75px;
 }
 .cardRadar{
@@ -34,10 +41,36 @@ body{
     border: transparent;
 }
 .form-check-input:checked {
-    background-color: #670067;
-    border-color: #670067;
+    background-color: #5d3b97;
+    border-color: #5d3b97;
 }
 .textoTerciario{
     font-size: 1.3rem;
     color: white;
 }
+
+/* classes que alteram o menu dropdown do line graph.
+Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dropdown, mas algumas só consegui pelo css, entao preferi alterar tudo por aqui pra centralizar as edições aqui */
+.Select-control {
+    background-color: #5d3b97 !important;
+    border-color: #5d3b97;
+    color: white;
+}
+  
+.Select-menu-outer {
+    background-color: #5d3b97;
+    border-color: #5d3b97;
+    color: white;
+}
+.Select--multi .Select-value{
+    color: white;
+    border-color: white;
+}
+.Select-value-icon{
+    color: white ;
+    border-color: white !important;
+}
+.Select-value-icon:hover{
+    color: red !important;
+}
+

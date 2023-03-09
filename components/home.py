@@ -22,14 +22,14 @@ TITLES = {x: y for x, y in zip(PERIOD_OPTIONS, delta_titles)}
 
 #menu radar graph
 INDICADORES = 'white'
-BACKGROUND_RADAR = '#670067'  
-LINHA_X = '#c1496b'
-LINHA_Y = '#c1496b'
-LINHAS_CIRCULARES = 'white'
-LINHA_CIRCULAR_EXTERNA = 'white'
-LINHAS_PREENCHIMENTO_1 = '#2d1106'
-LINHAS_PREENCHIMENTO_2 = 'rgba(255,255,255,0.1)'
-CAIXA_LEGENDA = 'rgba(0,0,0,0)'
+BACKGROUND_RADAR = '#5d3b97'  
+LINHA_X = 'white'
+LINHA_Y = 'white'
+LINHAS_CIRCULARES = 'black'
+LINHA_CIRCULAR_EXTERNA = 'black'
+LINHAS_PREENCHIMENTO_1 = 'black'
+LINHAS_PREENCHIMENTO_2 = 'white'
+CAIXA_LEGENDA = 'rgba(255,255,255,0.1)'
 VALORES_EIXO_X = 'white'
 TAMANHO_INDICADORES = 15
 TAMANHO_RADAR = 200
@@ -39,11 +39,12 @@ AXIS_FONT_SIZE = 20
 AXIS_COLOR = 'white'
 LINHAS_DE_GRADE = 'rgba(255,255,255,0.1)'
 LINHA_ZERO_X = 'rgba(255,255,255,0.2)'
-LINHA_EVOLUCAO_PATRIMONIAL = '#670067'
+LINHA_EVOLUCAO_PATRIMONIAL = '#5d3b97'
 LISTA_DE_CORES_LINHAS = ['#670067', '#9400d3', '#766ec5', '#120a8f', '#ff00cd', '#f34336', '#2d1106', '#00aaff', 'white']
 
 
 
+COR_LEGENDA = 'white'
 HEIGHT={'height': '100%'}
 MAIN_CONFIG = {
     "hovermode": "x unified",
@@ -53,16 +54,13 @@ MAIN_CONFIG = {
                 "x":0.8,
                 "title": {"text": None},
                 "bgcolor": CAIXA_LEGENDA},
+    "font" : {'color':COR_LEGENDA},
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 MAIN_CONFIG_2 = {
     "hovermode": "x unified",
-    # "legend": {"yanchor":"top", 
-    #             "y":1.0, 
-    #             "xanchor":"left",
-    #             "x":0.8,
-    #             "title": {"text": None},
-    #             "bgcolor": CAIXA_LEGENDA},
+    "legend": {"bgcolor": CAIXA_LEGENDA},
+    "font" : {'color': COR_LEGENDA},
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 
@@ -146,23 +144,22 @@ layout = dbc.Container([
                         dbc.CardBody([
                             dbc.Row([
                                 dbc.Col([html.Img(src='assets/logo_dark.png', height="80px"), "  Stocks Monitor"], className='stocks_monitor_title'),
-                                # dbc.Col(, md=7),
                                 dbc.Col("", md=2)
                             ])
                         ])
-                    ],className='cards_linha1')
+                    ],className='card1_linha1')
                 ], xs=12, md=8),
                 dbc.Col([
                     dbc.Card([
                         dbc.CardBody([
                             dbc.Row([
                                 dbc.Col([
-                                    html.H3('EGP 778,508.87'),
-                                    html.H5('301,361.2408000')
-                                ])
+                                    html.H2('TOTAL DA CARTEIRA'),
+                                    html.H3('R$2500,00')
+                                ], style={'text-align' : 'center'})
                             ])
                         ])
-                    ],className='cards_linha1')
+                    ],className='card2_linha1')
                 ], md=4)
             ],  className='g-2 my-auto'),
 
@@ -229,7 +226,7 @@ layout = dbc.Container([
         dbc.Col([
             dbc.Row([
                 dbc.Col([
-                    dcc.Dropdown(id='dropdown_card1', className='dbc textoTerciario', value=[], multi=True, options=[]),
+                    dcc.Dropdown(id='dropdown_card1', value=[], multi=True, options=[]),
                 ], sm=12, md=3),
                 dbc.Col([
                     dbc.RadioItems(
@@ -237,14 +234,14 @@ layout = dbc.Container([
                         value='1y',
                         id="period_input",
                         inline=True,
-                        className='textoTerciario'
+                        className='textoTerciario',
                     ),
                 ], sm=12, md=7),
                 dbc.Col([
                     html.Span([
-                            dbc.Label(className='fa fa-percent '),
+                            dbc.Label(className='fa fa-money'),
                             dbc.Switch(id='profit_switch', value=True, className='d-inline-block ms-1'),
-                            dbc.Label(className='fa fa-money')
+                            dbc.Label(className='fa fa-percent '),
                     ], className='textoTerciario'),
                 ], sm=12, md=2, style={'text-align' : 'end'})
             ],  className='g-2 my-auto'),
@@ -328,12 +325,6 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
     fig = go.Figure()
 
     if profit_switch:
-        df_book = pd.DataFrame(book_info)  
-        df_patrimonio = definir_evolucao_patrimonial(df_hist, df_book)
-        
-        fig.add_trace(go.Scatter(x=df_patrimonio.index, y=(df_patrimonio['evolucao_cum']- 1) * 100, mode='lines', name='Evolução Patrimonial', line=dict(color=LINHA_EVOLUCAO_PATRIMONIAL)))
-    
-    else:
         df_hist = df_hist[df_hist['symbol'].str.contains('|'.join(dropdown))]
         i=0
         for ticker in dropdown:
@@ -342,6 +333,14 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
             df_aux.dropna(inplace=True)
             df_aux.close = df_aux.close / df_aux.close.iloc[0] - 1
             fig.add_trace(go.Scatter(x=df_aux.datetime, y=df_aux.close*100, mode='lines', name=ticker, line=dict(color=LISTA_DE_CORES_LINHAS[i-1])))
+        
+    else:
+        df_book = pd.DataFrame(book_info)  
+        df_patrimonio = definir_evolucao_patrimonial(df_hist, df_book)
+        
+        fig.add_trace(go.Scatter(x=df_patrimonio.index, y=(df_patrimonio['evolucao_cum']- 1) * 100, mode='lines', name='Evolução Patrimonial', line=dict(color=LINHA_EVOLUCAO_PATRIMONIAL)))
+    
+        
     
     fig.update_layout(MAIN_CONFIG_2, yaxis={'ticksuffix': '%'}, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
     fig.update_xaxes(tickfont=dict(family='Courier', size=AXIS_FONT_SIZE, color=AXIS_COLOR), gridcolor=LINHAS_DE_GRADE)
