@@ -1,5 +1,5 @@
 body{
-    background-color: #000000;
+    background-color: #121212;
 }
 /* .home_layout{
     background-color: red;
@@ -56,13 +56,13 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     color: white;
 }
 .is-open>.Select-control{
-    border-color: rgba(255,255,255,0.1);;
+    border-color: rgba(255,255,255,0.1);
 }
 .is-focused:not(.is-open)>.Select-control{
     border-color: #5d3b97;
 }
 .Select-menu-outer {
-    background-color: #201c1c;
+    background-color: #2a2a2a;
     border-color: rgba(255,255,255,0.1);
     color: #5d3b97;
 }
@@ -81,7 +81,7 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
 /* Aqui vou ajustar as fontes: cores, tamanhos e famlias*/
 
 .textoPrincipal{
-    font-size: 6rem;
+    font-size: 5.3rem;
     color: #5d3b97;
 }
 .textoSecundario{

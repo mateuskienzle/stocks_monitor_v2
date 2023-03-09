@@ -19,8 +19,8 @@ AXIS_FONT_SIZE = 22
 AXIS_VALUES_COLOR = 'rgba(255,255,255,0.4)'
 LINHAS_DE_GRADE = 'rgba(255,255,255,0.1)'
 LINHA_ZERO_X = 'rgba(255,255,255,0.2)'
-LINHA_EVOLUCAO_PATRIMONIAL = '#5d3b97'
-LISTA_DE_CORES_LINHAS = ['#670067', '#9400d3', '#766ec5', '#120a8f', '#825280', '#00b6ff', '#00aaff', 'white']
+LINHA_EVOLUCAO_PATRIMONIAL = '#5d3b97' 
+LISTA_DE_CORES_LINHAS = ['#4c00b0', '#5d3b97', '#670067', '#8a00c2', '#57356a', '#b100cd', '#be2ed6', 'white']
 HOVER_LINE_GRAPH = {
         "bgcolor":"#5d3b97",
         "font" : {'color':COR_LEGENDA}

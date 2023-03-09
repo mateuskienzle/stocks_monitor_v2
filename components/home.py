@@ -101,7 +101,7 @@ layout = dbc.Container([
                     dbc.Card([
                         dbc.CardBody([
                             dbc.Row([
-                                dbc.Col([html.Img(src='assets/logo_dark.png', height="100px"), "  Stocks Monitor"], className='textoPrincipal'),
+                                dbc.Col([html.Img(src='assets/logo_dark.png', height="85px"), "  Stocks Monitor"], className='textoPrincipal'),
                             ])
                         ])
                     ],className='card1_linha1')
