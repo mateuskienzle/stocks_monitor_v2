@@ -13,6 +13,7 @@ from app import *
 from menu_styles import *
 
 
+
 offsets = [DateOffset(days=5), DateOffset(months=1), DateOffset(months=3), DateOffset(months=6), DateOffset(years=1), DateOffset(years=2)] 
 delta_titles = ['5 dias', '1 mês', '3 meses', '6 meses', '1 ano', '2 anos', 'Ano até agora']
 PERIOD_OPTIONS = ['5d','1mo','3mo','6mo','1y','2y', 'ytd']
@@ -29,10 +30,6 @@ df_ibov['Qtde. Teórica'] = pd.to_numeric(df_ibov['Qtde. Teórica'].str.replace(
 df_ibov['Participação'] = df_ibov['Qtde. Teórica'] / df_ibov['Qtde. Teórica'].sum()
 df_ibov['Setor'] = df_ibov['Setor'].apply(lambda x: x.split('/')[0].rstrip())
 df_ibov['Setor'] = df_ibov['Setor'].apply(lambda x: 'Cons N Cíclico' if x == 'Cons N Ciclico' else x)
-
-
-seta_crescendo = ['fa fa-arrow-up', 'textoQuartenarioVerde']
-seta_caindo = ['fa fa-arrow-down', 'textoQuartenarioVermelho']
 
 
 
@@ -101,7 +98,7 @@ layout = dbc.Container([
                     dbc.Card([
                         dbc.CardBody([
                             dbc.Row([
-                                dbc.Col([html.Img(src='assets/logo_dark.png', height="85px"), "  Stocks Monitor"], className='textoPrincipal'),
+                                dbc.Col([html.Img(src='assets/logo_dark.png', height="65px"), "  Stocks Exchange"], className='textoPrincipal'),
                             ])
                         ])
                     ],className='card1_linha1')
@@ -113,7 +110,7 @@ layout = dbc.Container([
                                 dbc.Col([
                                     html.Legend('TOTAL DA CARTEIRA', className='textoSecundario'),
                                     html.Legend('R$2500.00', className='textoSecundario')
-                                ], style={'text-align' : 'center'})
+                                ])
                             ])
                         ])
                     ],className='card2_linha1')
@@ -131,7 +128,7 @@ layout = dbc.Container([
                 dbc.CardBody([
                     dbc.Row([
                         dbc.Col([
-                            dbc.Switch(id='radar_switch', value=True, label="Setores IBOV X Carteira", className='textoQuartenario'),
+                            dbc.Switch(id='radar_switch', value=True, label="Setores IBOV X Carteira", className='textoTerciario'),
                         ])
                     ]),
                     dbc.Row([
@@ -157,7 +154,7 @@ layout = dbc.Container([
                         value='1y',
                         id="period_input",
                         inline=True,
-                        className='textoQuartenarioOpaco',
+                        className='textoTerciarioOpaco',
                     ),
                 ], sm=12, md=7),
                 dbc.Col([
@@ -165,7 +162,7 @@ layout = dbc.Container([
                             dbc.Label(className='fa fa-money'),
                             dbc.Switch(id='profit_switch', value=True, className='d-inline-block ms-1'),
                             dbc.Label(className='fa fa-percent '),
-                    ], className='textoQuartenario'),
+                    ], className='textoTerciarioSwitchLineGraph'),
                 ], sm=12, md=2, style={'text-align' : 'end'})
             ],  className='g-2 my-auto'),
         ], xs=12, md=12),     
@@ -173,18 +170,18 @@ layout = dbc.Container([
 
     dbc.Row([
         dbc.Col([
-            dbc.Row([
-                dbc.Col([
-                    html.Legend("Desempenho de ativos", id='title_line_graph', className='textoQuartenario')    
-                ], xs=12, md=12)
-            ]),
-            dbc.Row([
-                dbc.Col([
-                    dcc.Graph(id='line_graph', config={"displayModeBar": False, "showTips": False}, style=HEIGHT)    
-                ], xs=12, md=12)
-            ])
-        ]),
-    ],  className='g-2 my-auto')
+            # dbc.Row([
+            #     dbc.Col([
+            #         html.Legend("Desempenho de ativos", id='title_line_graph', className='textoTerciario', style={'margin-top' : '20px'})    
+            #     ], xs=12, md=12)
+            # ]),
+            # dbc.Row([
+            #     dbc.Col([
+                dcc.Graph(id='line_graph', config={"displayModeBar": False, "showTips": False}, className='graph_line')    
+            ], xs=12, md=12,)
+        #     ])
+        # ]),
+    ])
 ], fluid=True)
 
 
@@ -277,8 +274,8 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
         
     
     fig.update_layout(MAIN_CONFIG_2, showlegend=True, yaxis={'ticksuffix': '%'}, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', hoverlabel=HOVER_LINE_GRAPH)
-    fig.update_xaxes(tickfont=dict(family='Courier', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE)
-    fig.update_yaxes(tickfont=dict(family='Courier', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE, zerolinecolor=LINHA_ZERO_X)
+    fig.update_xaxes(tickfont=dict(family='Nexa', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE)
+    fig.update_yaxes(tickfont=dict(family='Nexa', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE, zerolinecolor=LINHA_ZERO_X)
     
     return fig
 
@@ -343,8 +340,8 @@ def atualizar_cards_ativos(book_data, period, historical_data):
         dfativos['Value1']= dfativos['Value1']*100 - 100
 
     
-    seta_crescendo = ['fa fa-arrow-up', 'textoQuartenarioVerde']
-    seta_caindo = ['fa fa-arrow-down', 'textoQuartenarioVermelho']
+    seta_crescendo = ['fa fa-angle-up', 'textoTerciarioVerde']
+    seta_caindo = ['fa fa-angle-down', 'textoTerciarioVermelho']
 
     lista_valores_ativos = []
     for ativo in range(len(dfativos)):
@@ -366,9 +363,9 @@ def atualizar_cards_ativos(book_data, period, historical_data):
             col = dbc.Col([
                         dbc.Card([
                             dbc.CardBody([
-                                html.Legend(lista_valores_ativos[i][0], className='textoTerciarioOpaco'),
-                                html.H5(["R$",lista_valores_ativos[i][1]], className='textoQuartenarioOpaco'),
-                                html.H5([html.I(className=lista_valores_ativos[i][3]), lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
+                                html.Legend(lista_valores_ativos[i][0], className='textoQuartenario'),
+                                html.H5(["R$",lista_valores_ativos[i][1], " "], className='textoTerciario'),
+                                html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                             ])
                         ],className='cards_linha2'), 
                     ], md=3)
@@ -379,9 +376,9 @@ def atualizar_cards_ativos(book_data, period, historical_data):
             col = dbc.Col([
                         dbc.Card([
                             dbc.CardBody([
-                                html.Legend(lista_valores_ativos[i][0], className='textoTerciarioOpaco'),
-                                html.H5(["R$",lista_valores_ativos[i][1], " "], className='textoQuartenarioOpaco'),
-                                html.H5([html.I(className=lista_valores_ativos[i][3]), lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
+                                html.Legend(lista_valores_ativos[i][0], className='textoQuartenario'),
+                                html.H5(["R$",lista_valores_ativos[i][1], " "], className='textoTerciario'),
+                                html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                             ])
                         ],className='cards_linha2'), 
                     ], md=3)

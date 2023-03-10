@@ -12,17 +12,17 @@ LINHAS_PREENCHIMENTO_2 = 'black'
 CAIXA_LEGENDA = 'rgba(255,255,255,0.1)'
 AXIS_X_VALUES_COLOR = 'rgba(0,0,0,0)'
 TAMANHO_INDICADORES = 15
-TAMANHO_RADAR = 280
+TAMANHO_RADAR = 190
 
 #menu line graph
-AXIS_FONT_SIZE = 22
+AXIS_FONT_SIZE = 20
 AXIS_VALUES_COLOR = 'rgba(255,255,255,0.4)'
 LINHAS_DE_GRADE = 'rgba(255,255,255,0.1)'
 LINHA_ZERO_X = 'rgba(255,255,255,0.2)'
 LINHA_EVOLUCAO_PATRIMONIAL = '#5d3b97' 
 LISTA_DE_CORES_LINHAS = ['#4c00b0', '#5d3b97', '#670067', '#8a00c2', '#57356a', '#b100cd', '#be2ed6', 'white']
 HOVER_LINE_GRAPH = {
-        "bgcolor":"#5d3b97",
+        "bgcolor":"#2a2a2a",
         "font" : {'color':COR_LEGENDA}
 }
 
@@ -35,7 +35,7 @@ MAIN_CONFIG = {
                 "x":1.0,
                 "title": {"text": None},
                 "bgcolor": CAIXA_LEGENDA},
-    "font" : {'color':COR_LEGENDA},
+    "font" : {'color': COR_LEGENDA},
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 MAIN_CONFIG_2 = {
