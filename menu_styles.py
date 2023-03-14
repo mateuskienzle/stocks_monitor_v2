@@ -2,7 +2,7 @@ COR_LEGENDA = 'rgba(255,255,255,0.4)'
 
 #menu radar graph
 INDICADORES = 'rgba(255,255,255,0.4)'
-BACKGROUND_RADAR = '#5d3b97'  
+BACKGROUND_RADAR = 'rgba(93, 59, 151, 1)'  
 LINHA_X = 'white'
 LINHA_Y = 'white'
 LINHAS_CIRCULARES = 'black'
@@ -19,12 +19,19 @@ AXIS_FONT_SIZE = 20
 AXIS_VALUES_COLOR = 'rgba(255,255,255,0.4)'
 LINHAS_DE_GRADE = 'rgba(255,255,255,0.1)'
 LINHA_ZERO_X = 'rgba(255,255,255,0.2)'
-LINHA_EVOLUCAO_PATRIMONIAL = '#5d3b97' 
-LISTA_DE_CORES_LINHAS = ['#4c00b0', '#5d3b97', '#670067', '#8a00c2', '#57356a', '#b100cd', '#be2ed6', 'white']
+LINHA_EVOLUCAO_PATRIMONIAL = 'rgba(93, 59, 151, 1)' 
+LISTA_DE_CORES_LINHAS = ['#4c00b0', 'rgba(93, 59, 151, 1)', '#670067', '#8a00c2', '#57356a', '#b100cd', '#be2ed6', 'white']
 HOVER_LINE_GRAPH = {
         "bgcolor":"#2a2a2a",
         "font" : {'color':COR_LEGENDA}
 }
+PREENCHIMENTO_LINE_GRAPH = 'rgba(93, 59, 151, 0.5)'
+
+
+
+
+
+
 
 HEIGHT={'height': '100%'}
 MAIN_CONFIG = {

@@ -44,7 +44,7 @@ body{
 .card2_linha1{
     background-color: transparent;
     color: white;
-    border-color: #5d3b97;
+    border-color: rgba(93, 59, 151, 1);
     padding-top: 2%;
 }
 .cards_linha2{
@@ -63,8 +63,8 @@ body{
     border-color: white;
 }
 .form-check-input:checked {
-    background-color: #5d3b97;
-    border-color: #5d3b97;
+    background-color: rgba(93, 59, 151, 1);
+    border-color: rgba(93, 59, 151, 1);
 }
 
 /* Estilização do menu dropdown do line graph.
@@ -79,20 +79,20 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     border-color: rgba(255,255,255,0.1);
 }
 .is-focused:not(.is-open)>.Select-control{
-    border-color: #5d3b97;
+    border-color: rgba(93, 59, 151, 1);
 }
 .Select-menu-outer {
     background-color: #2a2a2a;
     border-color: rgba(255,255,255,0.1);
-    color: #5d3b97;
+    color: rgba(93, 59, 151, 1);
 }
 .Select--multi .Select-value{
-    color: #5d3b97;
-    border-color: #5d3b97;
+    color: rgba(93, 59, 151, 1);
+    border-color: rgba(93, 59, 151, 1);
 }
 .Select-value-icon{
-    color: #5d3b97 ;
-    border-color: #5d3b97 !important;
+    color: rgba(93, 59, 151, 1) ;
+    border-color: rgba(93, 59, 151, 1) !important;
 }
 .Select-value-icon:hover{
     color: red !important;
@@ -101,7 +101,7 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
 /* Estilização das fontes: cores, tamanhos e famlias*/
 .textoPrincipal{
     font-size: 3.8rem;
-    color: #5d3b97;
+    color: rgba(93, 59, 151, 1);
     font-family: NexaRegular;
 }
 .textoSecundario{
@@ -144,5 +144,21 @@ h5 {
     display: inline;
 }
 .graph_line{
-    height: 550px;
+    height: 530px;
 }
+/* 
+.scorecard__graph {
+    position: relative;
+}
+
+.scorecard__graph::before {
+    content: '';
+    display: block;
+    background: linear-gradient(#fff0, purple);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    z-index: 0;
+} */

@@ -177,7 +177,7 @@ layout = dbc.Container([
             # ]),
             # dbc.Row([
             #     dbc.Col([
-                dcc.Graph(id='line_graph', config={"displayModeBar": False, "showTips": False}, className='graph_line')    
+                dcc.Graph(id='line_graph', config={"displayModeBar": False, "showTips": False}, className='graph_line scorecard__graph')    
             ], xs=12, md=12,)
         #     ])
         # ]),
@@ -269,7 +269,7 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
         df_book = pd.DataFrame(book_info)  
         df_patrimonio = definir_evolucao_patrimonial(df_hist, df_book)
         
-        fig.add_trace(go.Scatter(x=df_patrimonio.index, y=(df_patrimonio['evolucao_cum']- 1) * 100, mode='lines', name='Evolução Patrimonial', line=dict(color=LINHA_EVOLUCAO_PATRIMONIAL)))
+        fig.add_trace(go.Scatter(x=df_patrimonio.index, y=(df_patrimonio['evolucao_cum']- 1) * 100, mode='lines', name='Evolução Patrimonial', line=dict(color=LINHA_EVOLUCAO_PATRIMONIAL), fill='tozeroy', fillcolor=PREENCHIMENTO_LINE_GRAPH))
     
         
     
