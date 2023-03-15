@@ -16,8 +16,14 @@
   }
 
 body{
-    background-color: #121212;
+    background-color: rgba(13,8,52,1);
+    /* height: 100%; */
 }
+
+/* #react-entry-point{
+    height:100vh;
+} */
+
 .header_icon{
     background-color : transparent;
     border-color : transparent;
@@ -38,18 +44,19 @@ body{
     background-color: transparent;
     color: rgba(255,255,255,1);;
     border: transparent;
-    align-content: center;
+    /* align-content: center; */
     /* padding: 2%; */
 }
 .card2_linha1{
     background-color: transparent;
     color: white;
-    border-color: rgba(93, 59, 151, 1);
+    /* align-content:baseline; */
+    border-color: transparent;
     padding-top: 2%;
 }
 .cards_linha2{
-    background-color: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);;
+    background-color: rgba(32, 36, 73);
+    /* color: rgba(255,255,255,0.3); */
 }
 .cardRadar{
     background-color: transparent;
@@ -59,40 +66,39 @@ body{
 
 /*Estilização dos botões switchs e radio buttons*/
 .form-check-input{
-    background-color: rgba(255,255,255,1);
-    border-color: white;
+    background-color: #202449;
+    border-color: rgba(255,255,255,0.2);
 }
 .form-check-input:checked {
-    background-color: rgba(93, 59, 151, 1);
-    border-color: rgba(93, 59, 151, 1);
+    background-color: #b22db2;
+    border-color: #b22db2;
 }
 
 /* Estilização do menu dropdown do line graph.
 Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dropdown, mas algumas só consegui pelo css, entao preferi alterar tudo por aqui pra centralizar as edições aqui */
 .Select-control {
-
-    background-color: rgba(255,255,255,0.1) !important;
-    border-color: rgba(255,255,255,0.1);
+    background-color: #202449 !important;
+    border-color: rgba(255,255,255,0.2);
     color: white;
 }
 .is-open>.Select-control{
     border-color: rgba(255,255,255,0.1);
 }
 .is-focused:not(.is-open)>.Select-control{
-    border-color: rgba(93, 59, 151, 1);
+    border-color: #b22db2;
 }
 .Select-menu-outer {
-    background-color: #2a2a2a;
+    background-color: #202449;
     border-color: rgba(255,255,255,0.1);
-    color: rgba(93, 59, 151, 1);
+    color: #b22db2;
 }
 .Select--multi .Select-value{
-    color: rgba(93, 59, 151, 1);
-    border-color: rgba(93, 59, 151, 1);
+    color: #b22db2;
+    border-color: #b22db2;
 }
 .Select-value-icon{
-    color: rgba(93, 59, 151, 1) ;
-    border-color: rgba(93, 59, 151, 1) !important;
+    color: #b22db2 ;
+    border-color: #b22db2 !important;
 }
 .Select-value-icon:hover{
     color: red !important;
@@ -101,25 +107,25 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
 /* Estilização das fontes: cores, tamanhos e famlias*/
 .textoPrincipal{
     font-size: 3.8rem;
-    color: rgba(93, 59, 151, 1);
+    color: white;
     font-family: NexaRegular;
 }
 .textoSecundario{
     font-size: 1.8rem;
     color: white;
     font-family: NexaRegular;
-    text-align: center;
+    text-align: left;
 }
 .textoTerciario{
     font-size: 1.4rem;
     color: white;
     font-family: NexaRegular;
 }
-.textoTerciarioOpaco{
+/* .textoTerciarioOpaco{
     font-size: 1.4rem;
-    color: rgba(255,255,255,0.4);
+    color: white;
     font-family: Nexa;
-}
+} */
 .textoTerciarioSwitchLineGraph{
     font-size: 1.4rem;
     color: white;
@@ -145,6 +151,9 @@ h5 {
 }
 .graph_line{
     height: 530px;
+}
+.graph_cards{
+    height: 40px;
 }
 /* 
 .scorecard__graph {
