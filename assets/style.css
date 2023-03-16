@@ -53,6 +53,7 @@ body{
     /* align-content:baseline; */
     border-color: transparent;
     padding-top: 2%;
+    /* align-content: left !important; */
 }
 .cards_linha2{
     background-color: rgba(32, 36, 73);
@@ -110,42 +111,41 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     color: white;
     font-family: NexaRegular;
 }
+
 .textoSecundario{
     font-size: 1.8rem;
     color: white;
     font-family: NexaRegular;
     text-align: left;
 }
+
 .textoTerciario{
     font-size: 1.4rem;
     color: white;
     font-family: NexaRegular;
 }
-/* .textoTerciarioOpaco{
-    font-size: 1.4rem;
-    color: white;
-    font-family: Nexa;
-} */
 .textoTerciarioSwitchLineGraph{
     font-size: 1.4rem;
     color: white;
 }
-.textoTerciarioVerde{
-    font-size: 1.2rem;
-    color: rgba(8,180,164,1);
-    font-family: Nexa;
-}
-.textoTerciarioVermelho{
-    font-size: 1.2rem;
-    color: rgba(255,0,0, 0.7);
-    font-family: Nexa;
-}
+
 .textoQuartenario{
     font-size: 1.2rem;
     color: rgba(255,255,255,0.4);
     display: inline;
     font-family: NexaRegular;
 }
+.textoQuartenarioVerde{
+    font-size: 1.2rem;
+    color: rgba(8,180,164,1);
+    font-family: Nexa;
+}
+.textoQuartenarioVermelho{
+    font-size: 1.2rem;
+    color: rgba(255,0,0, 0.7);
+    font-family: Nexa;
+}
+
 h5 {
     display: inline;
 }

@@ -86,6 +86,13 @@ def slice_df_timedeltas(df: pd.DataFrame, period_string: str) -> pd.DataFrame:
     df = df[df.datetime > correct_timedelta].sort_values('datetime')
     return df
 
+try:
+    df_book_data = pd.read_csv('book_data.csv', index_col=0)
+except:
+    columns = ['date', 'preco', 'tipo', 'ativo', 'exchange', 'vol', 'logo_url', 'valor_total']
+    df_book_data = pd.DataFrame(columns=columns)
+
+df_compra_e_venda = df_book_data.groupby('tipo').sum()
 
 
 
@@ -102,23 +109,30 @@ layout = dbc.Container([
                             ])
                         ])
                     ],className='card1_linha1')
-                ], xs=12, md=8),
+                ], xs=12, md=7),
                 dbc.Col([
                     dbc.Card([
                         dbc.CardBody([
                             dbc.Row([
                                 dbc.Col([
-                                    html.Legend('CARTEIRA: R$2500.00', className='textoSecundario'),
-                                ])
+                                    html.Legend('CARTEIRA:', className='textoSecundario'),
+                                ], md=6),
+                                dbc.Col([
+                                    html.H5("R$" + str(round(df_book_data['valor_total'].sum() - df_compra_e_venda['valor_total']['Venda'], 2)), className='textoSecundario'),
+                                    html.H5([html.I(className='fa fa-angle-up'), "  ", " 7.19%"], className='textoQuartenarioVerde')
+                                ], md=6)
                             ]),
                             dbc.Row([
                                 dbc.Col([
-                                    html.Legend('IBOV: R$102.932,38', className='textoQuartenario')
-                                ])
+                                    html.Legend('IBOV: ', className='textoQuartenario')
+                                ], md=6),
+                                dbc.Col([
+                                    
+                                ], md=6, id='card_ibov')
                             ])
                         ])
                     ],className='card2_linha1')
-                ], md=4)
+                ], md=5)
             ],  className='g-2 my-auto'),
 
             dbc.Row([
@@ -266,13 +280,11 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
 
     if profit_switch:
         df_hist = df_hist[df_hist['symbol'].str.contains('|'.join(dropdown))]
-        i=0
-        for ticker in dropdown:
-            i+=1
+        for n, ticker in enumerate(dropdown):
             df_aux = df_hist[df_hist.symbol.str.contains(ticker)]
             df_aux.dropna(inplace=True)
             df_aux.close = df_aux.close / df_aux.close.iloc[0] - 1
-            fig.add_trace(go.Scatter(x=df_aux.datetime, y=df_aux.close*100, mode='lines', name=ticker, line=dict(color=LISTA_DE_CORES_LINHAS[i-1])))
+            fig.add_trace(go.Scatter(x=df_aux.datetime, y=df_aux.close*100, mode='lines', name=ticker, line=dict(color=LISTA_DE_CORES_LINHAS[n])))
         
     else:
         df_book = pd.DataFrame(book_info)  
@@ -303,6 +315,7 @@ def atualizar_dropdown(book):
 
 #callback para atualizar os cards
 @app.callback(
+    Output('card_ibov', 'children'),
     Output('cards_ativos', 'children'),
     Input('book_data_store', 'data'),
     Input('period_input', 'value'),
@@ -330,6 +343,17 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         diferenca_ativos[ativo] = compra - venda
 
     ativos_existentes = dict((k, v) for k, v in diferenca_ativos.items() if v >= 0)
+    ativos_existentes['BVSPX'] = 1 #botei 1 pq era só pra adicionar um valor qualquer, o que importa é a chave 'BVSPX'
+
+    # print('CHEGOU AQUI')
+    
+
+    
+    # df_ibov = df_hist[df_hist['symbol'].str.contains(' '.join(['IBOV']))]
+    # valor_atual_ibov = df_ibov['close'].iloc[-1]
+    # diferenca_ibov = valor_atual_ibov/df_ibov['close'].iloc[0]
+    # diferenca_ibov = diferenca_ibov*100 - 100
+
 
     if period == 'ytd':
         correct_timedelta = date.today().replace(month=1, day=1)
@@ -348,10 +372,13 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         dict_valores[key] = valor_atual, diferenca_periodo
         dfativos= pd.DataFrame(dict_valores).T.rename_axis('ticker').add_prefix('Value').reset_index()
         dfativos['Value1']= dfativos['Value1']*100 - 100
+    
+    # import pdb
+    # pdb.set_trace()
 
     
-    seta_crescendo = ['fa fa-angle-up', 'textoTerciarioVerde']
-    seta_caindo = ['fa fa-angle-down', 'textoTerciarioVermelho']
+    seta_crescendo = ['fa fa-angle-up', 'textoQuartenarioVerde',]
+    seta_caindo = ['fa fa-angle-down', 'textoQuartenarioVermelho']
 
     lista_valores_ativos = []
     lista_tags = []
@@ -366,18 +393,16 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_crescendo[0], seta_crescendo[1]])
 
 
-    #Graficos
-    
-    # print('CHEGOU AQUI')
-    # print(dropdown)
     # import pdb
     # pdb.set_trace()
+
+    #Graficos
+    
 
     df_hist = pd.DataFrame(historical_data)
     df_hist['datetime'] = pd.to_datetime(df_hist['datetime'], format='%Y-%m-%d %H:%M:%S')
     df_hist = slice_df_timedeltas(df_hist, period)
 
-    
     
 
     df_hist = df_hist[df_hist['symbol'].str.contains('|'.join(lista_tags))]
@@ -397,12 +422,6 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         
         lista_graficos.append(fig)
 
-    # import pdb
-    # pdb.set_trace()
-
-
-
-
   
     lista_colunas = []
     if len(lista_valores_ativos) <= 4:
@@ -421,7 +440,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                                 ]),
                                 dbc.Row([
                                     dbc.Col([
-                                        html.H5(["R$",lista_valores_ativos[i][1], " "], className='textoTerciario'),
+                                        html.H5(["R$",round(lista_valores_ativos[i][1], 2), " "], className='textoTerciario'),
                                         html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                                     ])
                                 ])
@@ -446,7 +465,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                                 ]),
                                 dbc.Row([
                                     dbc.Col([
-                                        html.H5(["R$",lista_valores_ativos[i][1], " "], className='textoTerciario'),
+                                        html.H5(["R$",round(lista_valores_ativos[i][1], 2), " "], className='textoTerciario'),
                                         html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                                     ])
                                 ])
@@ -459,5 +478,8 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
     card_ativos= dbc.Row([
                     *lista_colunas
                 ])
+    
+    valor_ibov = [html.H5(["R$",round(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
+                html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", lista_valores_ativos[-1][2].round(2), "%"], className=lista_valores_ativos[-1][4])]
                  
-    return card_ativos
+    return valor_ibov, card_ativos
