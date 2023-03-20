@@ -16,7 +16,7 @@
   }
 
 body{
-    background: linear-gradient(#110D31, #0E112D, #0E112D, #0E112D) fixed;
+    background: linear-gradient(#110D31, #110D31, #0E112D, #0E112D) fixed;
     /* height: 100%;  */
 }
 
@@ -177,3 +177,16 @@ h5 {
     height: 75%;
     z-index: 0;
 } */
+
+.card_compra{
+    border-left-width: 15px;
+    border-left-color: green;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+.card_venda{
+    border-left-width: 15px;
+    border-left-color: red;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}

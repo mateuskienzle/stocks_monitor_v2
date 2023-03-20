@@ -9,7 +9,7 @@ import yfinance as yf
 from tvDatafeed import TvDatafeed, Interval
 
 from app import *
-from components import home, header
+from components import home, header, wallet, row1
 
 
 # Funções =======================================
@@ -49,8 +49,14 @@ df_historical_data = atualizar_historical_data(df_historical_data, ativos_org)
 df_book = df_book.to_dict() 
 df_historical_data = df_historical_data.to_dict()
 
-
-
+toast = dbc.Toast("Seu ativo foi cadastrado com sucesso!",
+                            id="positioned_toast",
+                            header="Confirmação de cadastro",
+                            is_open=False,
+                            dismissable=False,
+                            duration = "4000",
+                            icon="success",
+                            style={"position": "fixed", "top": 66, "right": 10, "width": 350})
 
 app.layout = dbc.Container([
     dcc.Location(id="url"),
@@ -63,13 +69,18 @@ app.layout = dbc.Container([
             dbc.Row([
                 dbc.Col([
                     header.layout
-                ], className= 'header_layout', style={'height' : '100%'}),
+                ], className= 'header_layout'),
             ]),
             dbc.Row([
                 dbc.Col([
-                   
+                   row1.layout
                 ]),
-            ],id="page-content", style={'height' : '100%'}),
+            ]),
+            dbc.Row([
+                dbc.Col([
+                    toast
+                ]),
+            ],id="page-content"),
         ])
     ])
 
@@ -84,10 +95,13 @@ app.layout = dbc.Container([
 def render_page(pathname):
     if pathname == '/home' or pathname == '/':
         return home.layout
-    else:
-        return dbc.Container([
-            html.H1("404: Not found")
-        ])
+    if pathname == '/wallet':
+        return wallet.layout
+    # else:
+    #     return dbc.Container([
+    #         html.H1("404: Not found")
+    #     ])
+
 
 # Callback para atualizar as databases
 @app.callback(
