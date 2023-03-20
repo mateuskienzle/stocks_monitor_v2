@@ -63,15 +63,15 @@ app.layout = dbc.Container([
             dbc.Row([
                 dbc.Col([
                     header.layout
-                ], className= 'header_layout'),
+                ], className= 'header_layout', style={'height' : '100%'}),
             ]),
             dbc.Row([
                 dbc.Col([
-                    dbc.Container(id="page-content", fluid=True),
+                   
                 ]),
-            ], style={'height' : '100%'}),
+            ],id="page-content", style={'height' : '100%'}),
         ])
-     ])
+    ])
 
 ], fluid=True)
 

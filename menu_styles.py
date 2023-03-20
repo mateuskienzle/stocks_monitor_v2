@@ -64,4 +64,4 @@ MAIN_CONFIG_3 = {
     "margin": {"l":0, "r":0, "t":0, "b":0},
 }
 
-CARD_GRAPHS_LINE_COLOR = 'rgba(110, 83, 255, 0.3)'
+CARD_GRAPHS_LINE_COLOR = 'rgba(110, 83, 255, 0.2)'
