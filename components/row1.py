@@ -37,7 +37,7 @@ layout = dbc.Container([
                                     html.Legend('CARTEIRA:', className='textoSecundario'),
                                 ], md=6),
                                 dbc.Col([
-                                    html.H5("R$" + str(round(df_book_data['valor_total'].sum() - df_compra_e_venda['valor_total']['Venda'], 2)), className='textoSecundario'),
+                                    html.H5("R$" + '{:,.2f}'.format(df_book_data['valor_total'].sum() - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario'),
                                     html.H5([html.I(className='fa fa-angle-up'), "  ", " 7.19%"], className='textoQuartenarioVerde')
                                 ], md=6)
                             ]),
@@ -284,7 +284,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                                 ]),
                                 dbc.Row([
                                     dbc.Col([
-                                        html.H5(["R$",round(lista_valores_ativos[i][1], 2), " "], className='textoTerciario'),
+                                        html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[i][1]), " "], className='textoTerciario'),
                                         html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                                     ])
                                 ])
@@ -309,7 +309,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                                 ]),
                                 dbc.Row([
                                     dbc.Col([
-                                        html.H5(["R$",round(lista_valores_ativos[i][1], 2), " "], className='textoTerciario'),
+                                         html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[i][1]), " "], className='textoTerciario'),
                                         html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
                                     ])
                                 ])
@@ -323,7 +323,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                     *lista_colunas
                 ])
     
-    valor_ibov = [html.H5(["R$",round(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
+    valor_ibov = [html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
                 html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", lista_valores_ativos[-1][2].round(2), "%"], className=lista_valores_ativos[-1][4])]
                  
     return valor_ibov, card_ativos

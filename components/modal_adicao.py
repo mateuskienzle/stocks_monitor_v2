@@ -12,7 +12,7 @@ from datetime import date
 
 
 layout = dbc.Modal([
-    dbc.ModalHeader(dbc.ModalTitle("Cadastro de ativos")),
+    dbc.ModalHeader(dbc.ModalTitle("Cadastro de ativos"), className='modal_header'),
     dbc.ModalBody([
         dbc.Row([
             dbc.Col([
@@ -40,21 +40,20 @@ layout = dbc.Modal([
             ])
         ], style={'margin-top' : '1rem'}),
         dbc.Row([
-            dbc.Col([
-                html.Img(id='imagem_ativo', src="https://petrobras.com.br/sitepetrobras/imgs/bg/logo-social.png", style={'width' : '30%', 'margin-top' : '1rem', 'border-radius' : '15%'})
-            ]),
+            # dbc.Col([
+            #     html.Img(id='imagem_ativo', src="https://petrobras.com.br/sitepetrobras/imgs/bg/logo-social.png", style={'width' : '30%', 'margin-top' : '1rem', 'border-radius' : '15%'})
+            # ]),
             dbc.Col([
                 dbc.RadioItems(id='compra_venda_radio', options=[{"label": "Compra", "value": 'Compra'}, {"label": "Venda", "value": 'Venda'}], value='Compra'),
             ]),
         ])
-    ]),
-    dbc.ModalFooter(
+    ], className='modal_body'),
+    dbc.ModalFooter([
         dbc.Row([
             dbc.Col([dbc.Button("Salvar", id="submit_cadastro")])
         ])
-
-    ),
-],id="modal", is_open=False, size='lg')
+    ], className='modal_footer'),
+],id="modal", is_open=False, size='lg', centered=True)
 
 
 

@@ -35,7 +35,7 @@ try:    # caso exista, ler infos
     df_book = pd.read_csv('book_data.csv', index_col=0)
     ativos_org = iterar_sobre_df_book(df_book)
 except: # caso não exista, criar df
-    df_book = pd.DataFrame(columns=['date', 'preco', 'tipo', 'ativo', 'exchange', 'vol', 'logo_url', 'valor_total'])
+    df_book = pd.DataFrame(columns=['date', 'preco', 'tipo', 'ativo', 'exchange', 'vol', 'valor_total'])
 
 
 try:
@@ -49,14 +49,14 @@ df_historical_data = atualizar_historical_data(df_historical_data, ativos_org)
 df_book = df_book.to_dict() 
 df_historical_data = df_historical_data.to_dict()
 
-toast = dbc.Toast("Seu ativo foi cadastrado com sucesso!",
-                            id="positioned_toast",
-                            header="Confirmação de cadastro",
-                            is_open=False,
-                            dismissable=False,
-                            duration = "4000",
-                            icon="success",
-                            style={"position": "fixed", "top": 66, "right": 10, "width": 350})
+# toast = dbc.Toast("Seu ativo foi cadastrado com sucesso!",
+#                             id="positioned_toast",
+#                             header="Confirmação de cadastro",
+#                             is_open=False,
+#                             dismissable=False,
+#                             duration = "4000",
+#                             icon="success",
+#                             style={"position": "fixed", "top": 66, "right": 10, "width": 350})
 
 app.layout = dbc.Container([
     dcc.Location(id="url"),
@@ -78,7 +78,7 @@ app.layout = dbc.Container([
             ]),
             dbc.Row([
                 dbc.Col([
-                    toast
+                    # toast
                 ]),
             ],id="page-content"),
         ])

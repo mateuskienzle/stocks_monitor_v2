@@ -29,39 +29,37 @@ def generate_card(info_do_ativo):
                             dbc.Col([
                                 dbc.Row([
                                     dbc.Col([
-                                        html.Legend([html.I(className='fa fa-list-alt', style={"fontSize": '85%'})," Nome: " + str(info_do_ativo['ativo'])], className='textoQuartenario')
-                                    ]),
-                                ]),
-                                dbc.Row([
+                                        html.H5([html.I(className='fa fa-list-alt', style={"fontSize": '85%'}), " Nome: "], className='textoQuartenario'),
+                                        html.H5(str(info_do_ativo['ativo']), className='textoQuartenarioBranco')
+                                    ], md=2, style={'text-align' : 'left'}),                              
                                     dbc.Col([
-                                        html.Legend([html.I(className='fa fa-database', style={"fontSize": '85%'})," Quantidade: " + str(info_do_ativo['vol'])], className='textoQuartenario')
-                                    ]),
-                                ]),
-                                dbc.Row([
+                                        html.H5([html.I(className='fa fa-database', style={"fontSize": '85%'}), " Quantidade: "], className='textoQuartenario'),
+                                        html.H5(str(info_do_ativo['vol']), className='textoQuartenarioBranco')
+                                    ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
-                                        html.Legend([html.I(className='fa fa-usd', style={"fontSize": '100%'}), " Valor unitário: R$" + '{:,.2f}'.format(info_do_ativo['preco'])], className='textoQuartenario')
-                                    ]),
-                                ]),
-                                dbc.Row([
+                                        html.H5([html.I(className='fa fa-usd', style={"fontSize": '85%'}), " Unitário: "], className='textoQuartenario'),
+                                        html.H5('{:,.2f}'.format(info_do_ativo['preco']), className='textoQuartenarioBranco')
+                                        # " Valor unitário: R$" + '{:,.2f}'.format(info_do_ativo['preco'])
+                                    ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
-                                        html.Legend([html.I(className='fa fa-calendar', style={"fontSize": '85%'}), " Data: " + str(info_do_ativo['date'])[:10]], className='textoQuartenario')
-                                    ]),
-                                ]),
-                            ], md=6, xs=6),
-                            dbc.Col([
-                                dbc.Row([
+                                        html.H5([html.I(className='fa fa-calendar', style={"fontSize": '85%'}), " Data: "], className='textoQuartenario'),
+                                        html.H5(str(info_do_ativo['date'])[:10], className='textoQuartenarioBranco')
+                                    ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
-                                        html.Img(src=info_do_ativo['logo_url'], style={'width' : '10%', 'margin-top' : '1rem', 'border-radius' : '15%'}),
-                                        html.Legend([html.I(className='fa fa-handshake-o', style={"fontSize": '100%'}), " Tipo: " + str(info_do_ativo['tipo'])], className='textoQuartenario'),
-                                        html.Legend([html.I(className='fa fa-usd', style={"fontSize": '100%'}), " Total: R$" + '{:,.2f}'.format(info_do_ativo['preco']*info_do_ativo['vol'])], className='textoQuartenario')
-                                    ]),
+                                        html.H5([html.I(className='fa fa-handshake-o', style={"fontSize": '85%'}), " Tipo: "], className='textoQuartenario'),
+                                        html.H5(str(info_do_ativo['tipo']), className='textoQuartenarioBranco')
+                                    ], md=2, style={'text-align' : 'left'}),
+                                    dbc.Col([
+                                        html.H5([html.I(className='fa fa-usd', style={"fontSize": '85%'}), " Total: "], className='textoQuartenario'),
+                                        html.H5('{:,.2f}'.format(info_do_ativo['preco']*info_do_ativo['vol']), className='textoQuartenarioBranco'),
+                                    ], md=2, style={'text-align' : 'left'}),
                                 ]),
-                            ], md=5, xs=6, style={'text-align' : 'right'}),
+                            ], md=11, xs=6, style={'text-align' : 'left'}),
                             dbc.Col([
                                 dbc.Button([html.I(className = "fa fa-trash header-icon", 
-                                                    style={'font-size' : '200%'})],
+                                                    style={'font-size' : '150%'})],
                                                     id={'type': 'delete_event', 'index': info_do_ativo['id']},
-                                                    style={'background-color' : 'transparent', 'border-color' : 'transparent'}
+                                                    style={'background-color' : 'transparent', 'border-color' : 'transparent', 'padding' : '0px'}
                                                 ), 
                             ], md=1, xs=12, style={'text-align' : 'right'})
                         ])
@@ -101,7 +99,7 @@ layout = dbc.Container([
 
     dbc.Row([
         dbc.Col([
-            html.Legend("Card Teste")
+    
         ], md=12, id='layout_wallet', style={"height": "100%", "maxHeight": "36rem", "overflow-y": "auto"})
     ], className='g-2 my-auto')
 
@@ -118,11 +116,11 @@ def test1(data):
 
 @app.callback(
     Output('modal', 'is_open'),
-    Output("positioned_toast", "is_open"),
-    Output('positioned_toast', 'header'),
-    Output('positioned_toast', 'children'),
-    Output('positioned_toast', 'icon'),
-    Output('imagem_ativo', 'src'),
+    # Output("positioned_toast", "is_open"),
+    # Output('positioned_toast', 'header'),
+    # Output('positioned_toast', 'children'),
+    # Output('positioned_toast', 'icon'),
+    # Output('imagem_ativo', 'src'),
     Output('book_data_store', 'data'),
     Output ('layout_data', 'data'),
 
@@ -144,14 +142,14 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     # print('OPT4', callback_context.triggered[0])    # dict['value'] == None -> ignorar
                                                     # dict['value'] != None -> clicado
 
-    return_default = ['', '' , '']
-    return_fail_inputs = ['Não foi possível registrar a sua ação!', 
-                    'É necessário preencher todos os campos do Formulário.',
-                    'primary']
-    return_fail_ticker = return_fail_inputs.copy()
-    return_fail_ticker[1] = 'É necessário inserir um Ticker válido.'
-    return_compra = ['Confirmação de Adição', 'Registro de COMPRA efetivado!', 'success']
-    return_venda =  ['Confirmação de Remoção', 'Registro de VENDA efetivado!', 'warning']
+    # return_default = ['', '' , '']
+    # return_fail_inputs = ['Não foi possível registrar a sua ação!', 
+    #                 'É necessário preencher todos os campos do Formulário.',
+    #                 'primary']
+    # return_fail_ticker = return_fail_inputs.copy()
+    # return_fail_ticker[1] = 'É necessário inserir um Ticker válido.'
+    # return_compra = ['Confirmação de Adição', 'Registro de COMPRA efetivado!', 'success']
+    # return_venda =  ['Confirmação de Remoção', 'Registro de VENDA efetivado!', 'warning']
     
     df = pd.DataFrame(data)
 
@@ -159,23 +157,22 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     # Casos de trigg
     # 0. Trigg automático
     if trigg_id == '':
-        return [open, open, *return_default, '', data, lista_de_cards]
+        return [open, data, lista_de_cards]
 
     # 1. Botão de abrir modal
     if trigg_id == 'add_button':
-        return [not open, open, *return_default, '', data, lista_de_cards]
+        return [not open, data, lista_de_cards]
     
     # 2. Salvando ativo
     elif trigg_id == 'submit_cadastro':  # Corrigir caso de erro - None
         if None in [ativo, preco, vol] and open:
-            return [open, not open, *return_fail_inputs, '', data, lista_de_cards]
+            return [open, data, lista_de_cards]
         else:
             ticker = financer.get_symbol_object(ativo)
             if ticker:
                 df = pd.DataFrame(data)
-                logo = ticker.info['logo_url']
                 preco = round(preco, 2)
-                df.loc[len(df)] = [periodo, preco, radio, ativo, vol, logo, vol*preco]    
+                df.loc[len(df)] = [periodo, preco, radio, ativo, vol, vol*preco]    
                 df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
                 df.reset_index(drop=True, inplace=True)
                 df = df.sort_values(by='date', ascending=True)
@@ -186,17 +183,16 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
 
                 lista_de_cards = generate_list_of_cards(df)
 
-                retorno = return_compra if radio == 'Compra' else return_venda
-                return [not open, open, *retorno, '', data, lista_de_cards]
+                return [not open, data, lista_de_cards]
             else:   
-                return [not open, open, *return_fail_ticker, '', data, lista_de_cards]
+                return [not open, data, lista_de_cards]
 
     # 3. Caso de delete de card
     if 'delete_event' in trigg_id:
         trigg_dict = callback_context.triggered[0]
 
         if trigg_dict['value'] == None:
-            return [open, open, *return_default, '', data, lista_de_cards]
+            return [open, data, lista_de_cards]
 
         else:
             trigg_id = json.loads(trigg_id)
@@ -205,6 +201,6 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
 
             lista_de_cards = generate_list_of_cards(df)
 
-            return [open, open, *return_default, '', data, lista_de_cards]
+            return [open, data, lista_de_cards]
 
-    return [open, open, *return_default, '', data, lista_de_cards]
+    return [open, data, lista_de_cards]

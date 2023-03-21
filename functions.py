@@ -79,7 +79,7 @@ def slice_df_timedeltas(df: pd.DataFrame, period_string: str) -> pd.DataFrame:
 try:
     df_book_data = pd.read_csv('book_data.csv', index_col=0)
 except:
-    columns = ['date', 'preco', 'tipo', 'ativo', 'exchange', 'vol', 'logo_url', 'valor_total']
+    columns = ['date', 'preco', 'tipo', 'ativo', 'exchange', 'vol', 'valor_total']
     df_book_data = pd.DataFrame(columns=columns)
 
 df_compra_e_venda = df_book_data.groupby('tipo').sum()

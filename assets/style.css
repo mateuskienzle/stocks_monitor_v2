@@ -141,6 +141,12 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     display: inline;
     font-family: NexaRegular;
 }
+.textoQuartenarioBranco{
+    font-size: 1.2rem;
+    color: white;
+    display: inline;
+    font-family: NexaRegular;
+}
 .textoQuartenarioVerde{
     font-size: 1.2rem;
     color: rgba(8,180,164,1);
@@ -180,13 +186,84 @@ h5 {
 
 .card_compra{
     border-left-width: 15px;
-    border-left-color: green;
+    border-left-color: rgba(8,180,164,1);
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
 .card_venda{
     border-left-width: 15px;
-    border-left-color: red;
+    border-left-color: rgba(255,0,0, 0.7);
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+}
+
+/* estilização do scroll*/
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgba(255,255,255, 0.5);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    height: 30px;
+    background: #0E112D; 
+}
+
+/* estilização do modal*/
+.modal_header{
+    background: #110D31;
+    color: white;
+}
+.modal_body{
+    background: #110D31;
+    color: white;
+}
+.modal_footer{
+    background:  #110D31;
+}
+.btn-close{
+    background-color: rgba(255,255, 255, 0.1);
+}
+.btn-close:hover{
+    background-color: rgba(255,255, 255, 0.2);
+}
+#submit_cadastro{
+    background-color: rgba(255,255, 255, 0.1);
+    border-color: transparent;
+}
+#submit_cadastro:hover{
+    background-color: rgba(255,255, 255, 0.2);
+}
+#nome_ativo{
+    background-color: rgba(255,255, 255, 0.1);
+    border-color: rgba(255,255, 255, 0.1);
+    color: white;
+}
+#nome_ativo::placeholder{
+    color: rgba(255,255, 255, 0.3);
+}
+#preco_ativo{
+    background-color: rgba(255,255, 255, 0.1);
+    border-color: rgba(255,255, 255, 0.1);
+    color: white;
+}
+#preco_ativo::placeholder{
+    color: rgba(255,255, 255, 0.3);
+}
+#quantidade_ativo{
+    background-color: rgba(255,255, 255, 0.1);
+    border-color: rgba(255,255, 255, 0.1);
+    color: white;
+}
+#quantidade_ativo::placeholder{
+    color: rgba(255,255, 255, 0.3);
+}
+.fa-trash{
+    color : rgba(255, 255, 255, 0.6);
+}
+.fa-trash:hover{
+    transition: 0.2s ease-out;
+    color: white ;
 }
