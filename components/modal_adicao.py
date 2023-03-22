@@ -63,7 +63,7 @@ layout = dbc.Modal([
     Output('submit_cadastro', 'children'),
 
     Input('submit_cadastro', 'n_clicks'),
-    Input('add_button', 'n_clicks'), prevent_initial_call=True
+    Input('add_button', 'n_clicks'),
     # Input('positioned_toast', 'icon'),
 )
 def add_spinner(n, n2):

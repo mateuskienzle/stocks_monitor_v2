@@ -35,19 +35,24 @@ layout = dbc.Container([
                             dbc.Row([
                                 dbc.Col([
                                     html.Legend('CARTEIRA:', className='textoSecundario'),
-                                ], md=6),
+                                ], md=4, style={'text-align': 'right'}),
                                 dbc.Col([
                                     html.H5("R$" + '{:,.2f}'.format(df_book_data['valor_total'].sum() - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario'),
+                                ], md=5, style={'text-align': 'left'}),
+                                dbc.Col([
                                     html.H5([html.I(className='fa fa-angle-up'), "  ", " 7.19%"], className='textoQuartenarioVerde')
-                                ], md=6)
+                                ], md=3, style={'text-align': 'left'})
                             ]),
                             dbc.Row([
                                 dbc.Col([
                                     html.Legend('IBOV: ', className='textoQuartenario')
-                                ], md=6),
+                                ], md=4, style={'text-align': 'right'}),
                                 dbc.Col([
                                     
-                                ], md=6, id='card_ibov')
+                                ], md=5, id='ibov_valor', style={'text-align': 'left'}),
+                                dbc.Col([
+    
+                                ], md=3, id='ibov_percent', style={'text-align': 'left'})
                             ])
                         ])
                     ],className='card2_linha1')
@@ -95,9 +100,9 @@ layout = dbc.Container([
                 ], sm=12, md=7),
                 dbc.Col([
                     html.Span([
-                            dbc.Label(className='fa fa-money'),
+                            dbc.Label(className='fa fa-user-circle'),
                             dbc.Switch(id='profit_switch', value=True, className='d-inline-block ms-1'),
-                            dbc.Label(className='fa fa-percent '),
+                            dbc.Label(className='fa fa-shopping-basket'),
                     ], className='textoTerciarioSwitchLineGraph'),
                 ], sm=12, md=2, style={'text-align' : 'end'})
             ],  className='g-2 my-auto'),
@@ -154,7 +159,8 @@ def radar_graph(book_data, comparativo):
 
 #callback para atualizar os cards
 @app.callback(
-    Output('card_ibov', 'children'),
+    Output('ibov_valor', 'children'),
+    Output('ibov_percent', 'children'),
     Output('cards_ativos', 'children'),
     Input('book_data_store', 'data'),
     Input('period_input', 'value'),
@@ -323,7 +329,8 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                     *lista_colunas
                 ])
     
-    valor_ibov = [html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
-                html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", lista_valores_ativos[-1][2].round(2), "%"], className=lista_valores_ativos[-1][4])]
+    valor_ibov = html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
+             
+    percent_ibov =  html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(lista_valores_ativos[-1][2]), "%"], className=lista_valores_ativos[-1][4])
                  
-    return valor_ibov, card_ativos
+    return valor_ibov, percent_ibov, card_ativos

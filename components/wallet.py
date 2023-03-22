@@ -37,7 +37,7 @@ def generate_card(info_do_ativo):
                                         html.H5(str(info_do_ativo['vol']), className='textoQuartenarioBranco')
                                     ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
-                                        html.H5([html.I(className='fa fa-usd', style={"fontSize": '85%'}), " Unitário: "], className='textoQuartenario'),
+                                        html.H5([html.I(className='fa fa-money', style={"fontSize": '85%'}), " Unitário: "], className='textoQuartenario'),
                                         html.H5('{:,.2f}'.format(info_do_ativo['preco']), className='textoQuartenarioBranco')
                                         # " Valor unitário: R$" + '{:,.2f}'.format(info_do_ativo['preco'])
                                     ], md=2, style={'text-align' : 'left'}),
@@ -50,7 +50,7 @@ def generate_card(info_do_ativo):
                                         html.H5(str(info_do_ativo['tipo']), className='textoQuartenarioBranco')
                                     ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
-                                        html.H5([html.I(className='fa fa-usd', style={"fontSize": '85%'}), " Total: "], className='textoQuartenario'),
+                                        html.H5([html.I(className='fa fa-money', style={"fontSize": '85%'}), " Total: "], className='textoQuartenario'),
                                         html.H5('{:,.2f}'.format(info_do_ativo['preco']*info_do_ativo['vol']), className='textoQuartenarioBranco'),
                                     ], md=2, style={'text-align' : 'left'}),
                                 ]),
@@ -168,19 +168,20 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
         if None in [ativo, preco, vol] and open:
             return [open, data, lista_de_cards]
         else:
+            ativo = ativo.upper()
             ticker = financer.get_symbol_object(ativo)
             if ticker:
                 df = pd.DataFrame(data)
+                exchange = 'BMFBOVESPA'
                 preco = round(preco, 2)
-                df.loc[len(df)] = [periodo, preco, radio, ativo, vol, vol*preco]    
+                df.loc[len(df)] = [periodo, preco, radio, ativo, exchange ,vol, vol*preco]    
                 df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
                 df.reset_index(drop=True, inplace=True)
                 df = df.sort_values(by='date', ascending=True)
-                df.to_csv('registro_ativos.csv')
-                
+
+                df.to_csv('book_data.csv')
                 data = df.to_dict()
                 
-
                 lista_de_cards = generate_list_of_cards(df)
 
                 return [not open, data, lista_de_cards]
@@ -197,6 +198,8 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
         else:
             trigg_id = json.loads(trigg_id)
             df.drop([trigg_id['index']], inplace=True)
+            
+            df.to_csv('book_data.csv')
             data = df.to_dict()
 
             lista_de_cards = generate_list_of_cards(df)

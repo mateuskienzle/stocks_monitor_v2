@@ -55,11 +55,8 @@ body{
 }
 .card2_linha1{
     background-color: transparent;
-    color: white;
-    /* align-content:baseline; */
     border-color: transparent;
-    padding-top: 2%;
-    /* align-content: left !important; */
+    /* padding-top: 2%; */
 }
 .cards_linha2{
     background-color: rgba(32, 36, 73);
@@ -122,7 +119,6 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     font-size: 1.8rem;
     color: white;
     font-family: NexaRegular;
-    text-align: left;
 }
 
 .textoTerciario{

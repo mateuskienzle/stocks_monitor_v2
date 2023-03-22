@@ -119,7 +119,7 @@ def atualizar_databases(n, book_data, historical_data):
     df_historical = atualizar_historical_data(df_historical, ativos)
 
     # atualizando os CSV's
-    df_book.to_csv('book_data.csv')
+    # df_book.to_csv('book_data.csv')
     df_historical.to_csv('historical_data.csv')
 
     return df_historical.to_dict()
