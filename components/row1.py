@@ -134,7 +134,15 @@ def radar_graph(book_data, comparativo):
 
         df_registros = df_registros.groupby('ativo')['Participação'].sum()
         df_registros = pd.DataFrame(df_registros).reset_index()
-        df_registros['setores'] = np.concatenate([df_provisorio[df_provisorio['Código'] == ativo]['Setor'].values for ativo in df_registros['ativo']])
+        print('\n\nRADAR AQUIIIII')
+        print(df_registros)
+        try:
+            df_registros['setores'] = np.concatenate([df_provisorio[df_provisorio['Código'] == ativo]['Setor'].values for ativo in df_registros['ativo']])
+        except:
+            df_registros['setores'] = 'Sem registros'
+        # import pdb
+        # pdb.set_trace()
+
 
         df_registros = df_registros.groupby('setores')['Participação'].sum()
 
@@ -243,8 +251,8 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         else: 
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_crescendo[0], seta_crescendo[1]])
     
-    print('\n\nSALAH')
-    print(lista_valores_ativos)
+    # print('\n\nSALAH')
+    # print(lista_valores_ativos)
     import pdb
     # pdb.set_trace()
 
@@ -277,27 +285,33 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         fig.update_yaxes(visible=False)
         
         lista_graficos.append(fig)
-
+    
   
     lista_colunas = []
-    if len(lista_valores_ativos) <= 4:
-        for i in range(len(lista_valores_ativos)):
+    for n, ativo in enumerate(lista_valores_ativos):
+        if ativo[0] != 'BVSPX' and  n < 4:
+            # print('\n\nLEITADA')
+            # pdb.set_trace()
+            # print(lista_valores_ativos)
+            # print("\n\n")
+            # print(ativo)
+            # pdb.set_trace()
             col = dbc.Col([
                         dbc.Card([
                             dbc.CardBody([
                                 dbc.Row([
                                     dbc.Col([
-                                        html.Legend(lista_valores_ativos[i][0], className='textoQuartenario'),
+                                        html.Legend(ativo[0], className='textoQuartenario'),
                                         
                                     ], md=4),
                                     dbc.Col([
-                                        dcc.Graph(figure=lista_graficos[i], config={"displayModeBar": False, "showTips": False}, className='graph_cards'),
+                                        dcc.Graph(figure=lista_graficos[n], config={"displayModeBar": False, "showTips": False}, className='graph_cards'),
                                     ], md=8)
                                 ]),
                                 dbc.Row([
                                     dbc.Col([
-                                        html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[i][1]), " "], className='textoTerciario'),
-                                        html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
+                                        html.H5(["R$",'{:,.2f}'.format(ativo[1]), " "], className='textoTerciario'),
+                                        html.H5([html.I(className=ativo[3]), " ", '{:,.2f}'.format(ativo[2]), "%"], className=ativo[4])
                                     ])
                                 ])
                             ])
@@ -305,31 +319,39 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                     ], md=3)
             
             lista_colunas.append(col)
-    else: 
-        for i in range(4):
-            col = dbc.Col([
-                        dbc.Card([
-                            dbc.CardBody([
-                                dbc.Row([
-                                    dbc.Col([
-                                        html.Legend(lista_valores_ativos[i][0], className='textoQuartenario'),
+        else:  
+            dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.Legend("Nenhum ativo cadastrado")
+                        ])
+                    ])
+                ])
+    # else: 
+    #     for i in range(4):
+    #         col = dbc.Col([
+    #                     dbc.Card([
+    #                         dbc.CardBody([
+    #                             dbc.Row([
+    #                                 dbc.Col([
+    #                                     html.Legend(lista_valores_ativos[i][0], className='textoQuartenario'),
                                         
-                                    ], md=4),
-                                    dbc.Col([
-                                        dcc.Graph(figure=lista_graficos[i], config={"displayModeBar": False, "showTips": False}, className='graph_cards'),
-                                    ], md=8)
-                                ]),
-                                dbc.Row([
-                                    dbc.Col([
-                                         html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[i][1]), " "], className='textoTerciario'),
-                                        html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
-                                    ])
-                                ])
-                            ])
-                        ],className='cards_linha2'), 
-                    ], md=3)
+    #                                 ], md=4),
+    #                                 dbc.Col([
+    #                                     dcc.Graph(figure=lista_graficos[i], config={"displayModeBar": False, "showTips": False}, className='graph_cards'),
+    #                                 ], md=8)
+    #                             ]),
+    #                             dbc.Row([
+    #                                 dbc.Col([
+    #                                      html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[i][1]), " "], className='textoTerciario'),
+    #                                     html.H5([html.I(className=lista_valores_ativos[i][3]), " ", lista_valores_ativos[i][2].round(2), "%"], className=lista_valores_ativos[i][4])
+    #                                 ])
+    #                             ])
+    #                         ])
+    #                     ],className='cards_linha2'), 
+    #                 ], md=3)
             
-            lista_colunas.append(col)
+    #         lista_colunas.append(col)
 
     card_ativos= dbc.Row([
                     *lista_colunas
@@ -339,12 +361,34 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
              
     percent_ibov =  html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(lista_valores_ativos[-1][2]), "%"], className=lista_valores_ativos[-1][4])
 
+    
+    compra_e_venda = df_book.groupby('tipo')
+    df_compra_e_venda = compra_e_venda.sum()
+    if 'Venda' in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
+        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+    elif  'Venda' in compra_e_venda.groups and 'Compra' not in compra_e_venda.groups:   
+        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(-df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+    elif 'Venda' not in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
+        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
+    else:
+        valor_carteira =  html.H5("R$0.00", className='textoSecundario')
 
-    df_compra_e_venda = df_book.groupby('tipo').sum()
-    valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario'),
+    # pdb.set_trace()
+    # print('\n\n TA AQUIIIIIIIII')
+    # print(df_compra_e_venda['valor_total']['Compra'])
+    # try:
+        
+    # except:
+    #     if df_compra_e_venda['valor_total']['Compra'] == None:
+    #         valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+    #     elif df_compra_e_venda['valor_total']['Venda'] == None:
+    #         valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
+    #     else:
+            
+        
 
-    print('\n\nTOME')
-    print(df_book)
+    # print('\n\nTOME')
+    # print(df_book)
 
     # pdb.set_trace()
                  

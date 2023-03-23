@@ -63,7 +63,7 @@ app.layout = dbc.Container([
     dcc.Store(id='book_data_store', data=df_book, storage_type='memory'),
     dcc.Store(id='historical_data_store', data=df_historical_data, storage_type='memory'),
     dcc.Store(id='layout_data', data=[], storage_type='memory'),
-    dcc.Interval(id='interval_update', interval=1000*600),
+    # dcc.Interval(id='interval_update', interval=1000*600),
     dbc.Row([
         dbc.Col([
             dbc.Row([
@@ -106,11 +106,11 @@ def render_page(pathname):
 # Callback para atualizar as databases
 @app.callback(
     Output('historical_data_store', 'data'),
-    Input('interval_update', 'n_intervals'),
+    # Input('interval_update', 'n_intervals'),
     Input('book_data_store', 'data'),
     State('historical_data_store', 'data')
 )
-def atualizar_databases(n, book_data, historical_data):
+def atualizar_databases(book_data, historical_data):
     df_book = pd.DataFrame(book_data)
     df_historical = pd.DataFrame(historical_data)
 

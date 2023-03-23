@@ -197,10 +197,17 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
 
         else:
             trigg_id = json.loads(trigg_id)
-            df.drop([trigg_id['index']], inplace=True)
-            
+            # print('\n\nERRO AQUII')
+            # print(trigg_id)
+            # print(df)
+            # import pdb
+            # pdb.set_trace()
+            df.drop([str(trigg_id['index'])], inplace=True)
+            df = df.sort_values(by='date', ascending=True)
             df.to_csv('book_data.csv')
-            data = df.to_dict()
+            # data = df.to_dict()
+            # print('\n\nLEITADA')
+            # print(data)
 
             lista_de_cards = generate_list_of_cards(df)
 

@@ -70,29 +70,29 @@ def add_spinner(n, n2):
     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
 
     if trigg_id == 'submit_cadastro':
-        return [dbc.Spinner(size="sm"), "  Carregando informações do ativo..."]
+        return [dbc.Spinner(size="sm"), " Processando registro"]
     elif trigg_id == 'add_button':
         return "Salvar"
     else:
         return no_update
 
 # Callback para limpar infos do modal -----
-@app.callback(
-    Output('nome_ativo', 'value'),
-    Output('preco_ativo', 'value'),
-    Output('data_ativo', 'date'),
-    Output('quantidade_ativo', 'value'),
+# @app.callback(
+#     Output('nome_ativo', 'value'),
+#     Output('preco_ativo', 'value'),
+#     Output('data_ativo', 'date'),
+#     Output('quantidade_ativo', 'value'),
 
-    Input('positioned_toast', 'header')
-)
-def reset_data_modal(icon):
-    trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
+#     Input('positioned_toast', 'header')
+# )
+# def reset_data_modal(icon):
+#     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
 
-    if trigg_id != 'positioned_toast':
-        return no_update
-    else:
-        if "Confirmação" in icon:
-            return [None, None, date.today(), None]
-        else:
-            return no_update
+#     if trigg_id != 'positioned_toast':
+#         return no_update
+#     else:
+#         if "Confirmação" in icon:
+#             return [None, None, date.today(), None]
+#         else:
+#             return no_update
     

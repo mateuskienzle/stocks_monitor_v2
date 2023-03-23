@@ -84,6 +84,12 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
 def atualizar_dropdown(book):
     df = pd.DataFrame(book)
     unique = df['ativo'].unique()
+    # import pdb
+    # pdb.set_trace()
+    try:
+       dropdown = [unique[0], [{'label': x, 'value': x} for x in unique]]
+    except:
+        dropdown = ['', [{'label': x, 'value': x} for x in unique]]
     
-    return [unique[0], [{'label': x, 'value': x} for x in unique]]
+    return dropdown
 
