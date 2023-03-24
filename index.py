@@ -89,7 +89,7 @@ app.layout = dbc.Container([
 
 @app.callback(
     Output('page-content', 'children'),
-    Input('url', 'pathname')
+    Input('url', 'pathname'),
 )
 
 def render_page(pathname):
@@ -126,4 +126,4 @@ def atualizar_databases(book_data, historical_data):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=8050)
+    app.run_server(debug=True, port=8051)

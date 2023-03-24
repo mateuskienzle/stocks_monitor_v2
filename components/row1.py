@@ -34,29 +34,29 @@ layout = dbc.Container([
                         dbc.CardBody([
                             dbc.Row([
                                 dbc.Col([
-                                    html.Legend('CARTEIRA:', className='textoSecundario'),
-                                ], md=4, style={'text-align': 'right'}),
+                                    html.Legend('CARTEIRA:', className='textoSecundario')
+                                ], md=4, xs=3, style={'text-align': 'right'}),
                                 dbc.Col([
                                     
-                                ], md=5,  id='carteira_valor' ,style={'text-align': 'left'}),
+                                ], md=5, xs=6, id='carteira_valor' ,style={'text-align': 'left'}),
                                 dbc.Col([
                                     html.H5([html.I(className='fa fa-angle-up'), "  ", " 7.19%"], className='textoQuartenarioVerde')
-                                ], md=3, style={'text-align': 'left'})
+                                ], md=3, xs=3, style={'text-align': 'left'})
                             ]),
                             dbc.Row([
                                 dbc.Col([
                                     html.Legend('IBOV: ', className='textoQuartenario')
-                                ], md=4, style={'text-align': 'right'}),
+                                ], md=4, xs=3, style={'text-align': 'right'}),
                                 dbc.Col([
                                     
-                                ], md=5, id='ibov_valor', style={'text-align': 'left'}),
+                                ], md=5, xs=5, id='ibov_valor', style={'text-align': 'left'}),
                                 dbc.Col([
     
-                                ], md=3, id='ibov_percent', style={'text-align': 'left'})
+                                ], md=3, xs=4, id='ibov_percent', style={'text-align': 'left'})
                             ])
                         ])
                     ],className='card2_linha1')
-                ], md=5)
+                ], md=5, xs=12)
             ],  className='g-2 my-auto'),
 
             dbc.Row([
@@ -267,8 +267,6 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
     df_hist['datetime'] = pd.to_datetime(df_hist['datetime'], format='%Y-%m-%d %H:%M:%S')
     df_hist = slice_df_timedeltas(df_hist, period)
 
-    
-
     df_hist = df_hist[df_hist['symbol'].str.contains('|'.join(lista_tags))]
 
     lista_graficos = []
@@ -285,8 +283,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         fig.update_yaxes(visible=False)
         
         lista_graficos.append(fig)
-    
-  
+
     lista_colunas = []
     for n, ativo in enumerate(lista_valores_ativos):
         if ativo[0] != 'BVSPX' and  n < 4:
@@ -316,17 +313,9 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                                 ])
                             ])
                         ],className='cards_linha2'), 
-                    ], md=3)
+                    ], md=3, xs=12)
             
             lista_colunas.append(col)
-        else:  
-            dbc.Col([
-                    dbc.Card([
-                        dbc.CardBody([
-                            html.Legend("Nenhum ativo cadastrado")
-                        ])
-                    ])
-                ])
     # else: 
     #     for i in range(4):
     #         col = dbc.Col([

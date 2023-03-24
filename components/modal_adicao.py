@@ -34,10 +34,10 @@ layout = dbc.Modal([
                 initial_visible_month=date(2017, 8, 5),
                 date=date.today()
                 ),
-            ], sm=12, md=6),
+            ], xs=6, md=6),
             dbc.Col([
                 dbc.Input(id="quantidade_ativo", placeholder="Quantidade", type='number', min=0, step=1),
-            ])
+            ], xs=6, md=6)
         ], style={'margin-top' : '1rem'}),
         dbc.Row([
             # dbc.Col([
@@ -45,7 +45,7 @@ layout = dbc.Modal([
             # ]),
             dbc.Col([
                 dbc.RadioItems(id='compra_venda_radio', options=[{"label": "Compra", "value": 'Compra'}, {"label": "Venda", "value": 'Venda'}], value='Compra'),
-            ]),
+            ], style ={'padding-top' : '20px'}),
         ])
     ], className='modal_body'),
     dbc.ModalFooter([

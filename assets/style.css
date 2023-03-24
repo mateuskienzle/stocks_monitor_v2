@@ -216,6 +216,9 @@ h5 {
     background: #110D31;
     color: white;
 }
+.btn-close{
+    background-image:url(https://icon-library.com/images/x-icon-white/x-icon-white-7.jpg);
+}
 .modal_body{
     background: #110D31;
     color: white;
@@ -223,18 +226,17 @@ h5 {
 .modal_footer{
     background:  #110D31;
 }
-.btn-close{
-    background-color: rgba(255,255, 255, 0.1);
+.modal-content{
+    background-color: transparent;
+    border-color: white;
 }
-.btn-close:hover{
-    background-color: rgba(255,255, 255, 0.2);
-}
+
 #submit_cadastro{
-    background-color: rgba(255,255, 255, 0.1);
+    background-color: rgba(178, 45, 178, 1);
     border-color: transparent;
 }
 #submit_cadastro:hover{
-    background-color: rgba(255,255, 255, 0.2);
+    background-color: rgba(178, 45, 178, 0.8);
 }
 #nome_ativo{
     background-color: rgba(255,255, 255, 0.1);
@@ -260,6 +262,17 @@ h5 {
 #quantidade_ativo::placeholder{
     color: rgba(255,255, 255, 0.3);
 }
+.DateInput_input{
+    background-color: #292646;
+    color: rgba(255,255, 255, 1);
+}
+.SingleDatePickerInput{
+    border-color: #292646;
+}
+/* .SingleDatePicker_picker{
+    background-color: green;
+} */
+
 .fa-trash{
     color : rgba(255, 255, 255, 0.6);
 }

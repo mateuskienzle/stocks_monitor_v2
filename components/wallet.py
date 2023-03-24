@@ -140,7 +140,7 @@ def test1(data):
     State('compra_venda_radio', 'value'),
     State('preco_ativo', 'value'),
     State('data_ativo', 'date'),
-    State('quantidade_ativo', 'value'),
+    State('quantidade_ativo', 'value'), 
 )
 def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
@@ -166,14 +166,15 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     # elif lista_de_cards.children[0].children[0].children == 'Nenhum registro efetuado':
     #     lista_de_cards = card_sem_registros
 
-    print('\n\nLISTA DE CARDS INICIO DA FUNC')
-    print(lista_de_cards)
-    print(len(lista_de_cards))
     # import pdb
     # pdb.set_trace()
     # Casos de trigg
     # 0. Trigg automático
     if trigg_id == '':
+        # df.to_csv('book_data.csv')
+        # data = df.to_dict()
+        
+        # lista_de_cards = generate_list_of_cards(df)
         return [open, data, lista_de_cards]
 
     # 1. Botão de abrir modal
@@ -209,8 +210,8 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     if 'delete_event' in trigg_id:
         trigg_dict = callback_context.triggered[0]
 
-        # if trigg_dict['value'] == None:
-        #     return [open, data, lista_de_cards]
+        if trigg_dict['value'] == None:
+            return [open, data, lista_de_cards]
 
         # else:
         trigg_id = json.loads(trigg_id)
@@ -224,18 +225,12 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
         df = df.sort_values(by='date', ascending=True)
         df.to_csv('book_data.csv')
         data = df.to_dict()
-        print('\n\nDELETE DA WALLET')
-        print(trigg_dict)
-        print(df)
         # data = df.to_dict()
         # print('\n\nLEITADA')
         # print(data)
         lista_de_cards = generate_list_of_cards(df)
         if len(lista_de_cards) == 0:
             lista_de_cards = card_sem_registros
-        print('\n\nLISTA DE CARDS AQUI')
-        print(lista_de_cards)
-        print(len(lista_de_cards))
 
         return [open, data, lista_de_cards]
 
