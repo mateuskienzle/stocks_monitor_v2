@@ -192,6 +192,10 @@ h5 {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
+.card_sem_registros{
+    background-color: transparent;
+    color: white;
+}
 
 /* estilização do scroll*/
 ::-webkit-scrollbar {

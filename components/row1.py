@@ -134,8 +134,8 @@ def radar_graph(book_data, comparativo):
 
         df_registros = df_registros.groupby('ativo')['Participação'].sum()
         df_registros = pd.DataFrame(df_registros).reset_index()
-        print('\n\nRADAR AQUIIIII')
-        print(df_registros)
+        # print('\n\nRADAR AQUIIIII')
+        # print(df_registros)
         try:
             df_registros['setores'] = np.concatenate([df_provisorio[df_provisorio['Código'] == ativo]['Setor'].values for ativo in df_registros['ativo']])
         except:

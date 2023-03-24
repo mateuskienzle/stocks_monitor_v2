@@ -19,6 +19,12 @@ financer = Asimov_finance()
 
 HEIGHT={'height': '100%'}
 
+card_sem_registros = dbc.Card([
+                        dbc.CardBody([
+                            html.Legend("Nenhum registro efetuado", className='textoQuartenarioBranco')
+                        ])
+                    ], className='card_sem_registros')
+
 
 def generate_card(info_do_ativo):
     new_card =  dbc.Row([
@@ -153,7 +159,18 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     
     df = pd.DataFrame(data)
 
+
     lista_de_cards = generate_list_of_cards(df)
+    if len(lista_de_cards) == 0:
+        lista_de_cards = card_sem_registros
+    # elif lista_de_cards.children[0].children[0].children == 'Nenhum registro efetuado':
+    #     lista_de_cards = card_sem_registros
+
+    print('\n\nLISTA DE CARDS INICIO DA FUNC')
+    print(lista_de_cards)
+    print(len(lista_de_cards))
+    # import pdb
+    # pdb.set_trace()
     # Casos de trigg
     # 0. Trigg automático
     if trigg_id == '':
@@ -192,25 +209,34 @@ def func_modal(n1, n2, data, event, ativo, open, radio, preco, periodo, vol):
     if 'delete_event' in trigg_id:
         trigg_dict = callback_context.triggered[0]
 
-        if trigg_dict['value'] == None:
-            return [open, data, lista_de_cards]
+        # if trigg_dict['value'] == None:
+        #     return [open, data, lista_de_cards]
 
-        else:
-            trigg_id = json.loads(trigg_id)
-            # print('\n\nERRO AQUII')
-            # print(trigg_id)
-            # print(df)
-            # import pdb
-            # pdb.set_trace()
-            df.drop([str(trigg_id['index'])], inplace=True)
-            df = df.sort_values(by='date', ascending=True)
-            df.to_csv('book_data.csv')
-            # data = df.to_dict()
-            # print('\n\nLEITADA')
-            # print(data)
+        # else:
+        trigg_id = json.loads(trigg_id)
+        # print('\n\nERRO AQUII')
+        # print(trigg_id)
+        # print(df)
+        # import pdb
+        # pdb.set_trace()
+        df.drop([str(trigg_id['index'])], inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        df = df.sort_values(by='date', ascending=True)
+        df.to_csv('book_data.csv')
+        data = df.to_dict()
+        print('\n\nDELETE DA WALLET')
+        print(trigg_dict)
+        print(df)
+        # data = df.to_dict()
+        # print('\n\nLEITADA')
+        # print(data)
+        lista_de_cards = generate_list_of_cards(df)
+        if len(lista_de_cards) == 0:
+            lista_de_cards = card_sem_registros
+        print('\n\nLISTA DE CARDS AQUI')
+        print(lista_de_cards)
+        print(len(lista_de_cards))
 
-            lista_de_cards = generate_list_of_cards(df)
-
-            return [open, data, lista_de_cards]
+        return [open, data, lista_de_cards]
 
     return [open, data, lista_de_cards]
