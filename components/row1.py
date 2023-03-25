@@ -346,21 +346,21 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                     *lista_colunas
                 ])
     
-    valor_ibov = html.H5(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
+    valor_ibov = html.Legend(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
              
-    percent_ibov =  html.H5([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(lista_valores_ativos[-1][2]), "%"], className=lista_valores_ativos[-1][4])
+    percent_ibov =  html.Legend([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(lista_valores_ativos[-1][2]), "%"], className=lista_valores_ativos[-1][4])
 
     
     compra_e_venda = df_book.groupby('tipo')
     df_compra_e_venda = compra_e_venda.sum()
     if 'Venda' in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
-        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
     elif  'Venda' in compra_e_venda.groups and 'Compra' not in compra_e_venda.groups:   
-        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(-df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(-df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
     elif 'Venda' not in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
-        valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
+        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
     else:
-        valor_carteira =  html.H5("R$0.00", className='textoSecundario')
+        valor_carteira =  html.Legend("R$0.00", className='textoSecundario')
 
     # pdb.set_trace()
     # print('\n\n TA AQUIIIIIIIII')
