@@ -216,6 +216,10 @@ h5 {
     background: #110D31;
     color: white;
 }
+.modal{
+    --bs-modal-header-border-color: #343b3e;
+    --bs-modal-footer-border-color: #343b3e;
+}
 .btn-close{
     background-image:url(https://icon-library.com/images/x-icon-white/x-icon-white-7.jpg);
 }
@@ -228,7 +232,8 @@ h5 {
 }
 .modal-content{
     background-color: transparent;
-    border-color: white;
+    border-color: #343b3e;
+    border-width: 1px;
 }
 
 #submit_cadastro{
