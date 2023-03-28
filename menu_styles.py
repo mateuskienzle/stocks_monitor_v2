@@ -25,7 +25,7 @@ HOVER_LINE_GRAPH = {
         "bgcolor":"rgba(32, 36, 73, 0.7)",
         "font" : {'color':COR_LEGENDA}
 }
-PREENCHIMENTO_LINE_GRAPH = 'rgba(178, 45, 178, 0.1)'
+# PREENCHIMENTO_LINE_GRAPH = 'rgba(178, 45, 178, 0.1)'
 
 
 

@@ -1,4 +1,4 @@
-from dash import html, dcc, Input, Output, State, no_update
+from dash import html, dcc, Input, Output, State, no_update, callback_context
 import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
@@ -171,17 +171,18 @@ def radar_graph(book_data, comparativo):
     Output('ibov_percent', 'children'),
     Output('carteira_valor', 'children'),
     Output('cards_ativos', 'children'),
-    Input('book_data_store', 'data'),
+    State('historical_data_store', 'data'),
     Input('period_input', 'value'),
     Input('dropdown_card1', 'value'),
-    State('historical_data_store', 'data')
+    Input('book_data_store', 'data'),
 )
 
-def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
+def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
+
     if dropdown == None:
         return no_update
     if type(dropdown) != list: dropdown = [dropdown]
-    dropdown = ['BVSPX'] + dropdown
+    dropdown = ['IBOV'] + dropdown
     
     df_book = pd.DataFrame(book_data)
     df_hist = pd.DataFrame(historical_data)
@@ -202,7 +203,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         diferenca_ativos[ativo] = compra - venda
 
     ativos_existentes = dict((k, v) for k, v in diferenca_ativos.items() if v >= 0)
-    ativos_existentes['BVSPX'] = 1 #botei 1 pq era só pra adicionar um valor qualquer, o que importa é a chave 'BVSPX'
+    ativos_existentes['IBOV'] = 1 #botei 1 pq era só pra adicionar um valor qualquer, o que importa é a chave 'IBOV'
 
     # print('CHEGOU AQUI')
     
@@ -222,6 +223,11 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
 
     dict_valores = {}
 
+    import pdb
+    # pdb.set_trace()
+    # if trigg_id == 'book_data_store':
+    #     time.sleep(2)
+
     for key, value in ativos_existentes.items():
         df_auxiliar = (df_hist[df_hist.symbol.str.contains(key)])
         df_auxiliar['datetime'] = pd.to_datetime(df_auxiliar['datetime'], format='%Y-%m-%d %H:%M:%S')
@@ -231,6 +237,8 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
         dict_valores[key] = valor_atual, diferenca_periodo
         dfativos= pd.DataFrame(dict_valores).T.rename_axis('ticker').add_prefix('Value').reset_index()
         dfativos['Value1']= dfativos['Value1']*100 - 100
+
+    # pdb.set_trace()
     
     # import pdb
     # # pdb.set_trace()
@@ -286,8 +294,7 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
 
     lista_colunas = []
     for n, ativo in enumerate(lista_valores_ativos):
-        if ativo[0] != 'BVSPX' and  n < 4:
-            # print('\n\nLEITADA')
+        if ativo[0] != 'IBOV' and  n < 4:
             # pdb.set_trace()
             # print(lista_valores_ativos)
             # print("\n\n")
@@ -346,9 +353,10 @@ def atualizar_cards_ativos(book_data, period, dropdown, historical_data):
                     *lista_colunas
                 ])
     
-    valor_ibov = html.Legend(["R$",'{:,.2f}'.format(lista_valores_ativos[-1][1], 2), " "], className='textoQuartenario'),
+
+    valor_ibov = html.Legend(["",'{:,.2f}'.format(dfativos['Value0'].iloc[-1]), " "], className='textoQuartenario'),
              
-    percent_ibov =  html.Legend([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(lista_valores_ativos[-1][2]), "%"], className=lista_valores_ativos[-1][4])
+    percent_ibov =  html.Legend([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(dfativos['Value1'].iloc[-1]), "%"], className=lista_valores_ativos[-1][4])
 
     
     compra_e_venda = df_book.groupby('tipo')

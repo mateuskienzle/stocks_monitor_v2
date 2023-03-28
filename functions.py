@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from pandas.tseries.offsets import DateOffset
 from datetime import date
-
+from tvDatafeed import TvDatafeed, Interval
 
 offsets = [DateOffset(days=5), DateOffset(months=1), DateOffset(months=3), DateOffset(months=6), DateOffset(years=1), DateOffset(years=2)] 
 delta_titles = ['5 dias', '1 mês', '3 meses', '6 meses', '1 ano', '2 anos', 'Ano até agora']
@@ -36,7 +36,12 @@ def definir_evolucao_patrimonial(df_historical_data: pd.DataFrame, df_book_data:
     df_cotacoes.columns = [col.split(':')[-1] for col in df_cotacoes.columns]
     df_carteira.columns = [col.split(':')[-1] for col in df_carteira.columns]
     
-    del df_carteira['BVSPX'], df_cotacoes['BVSPX']
+    try:
+        print('\n\n\t\t DELETADO BVSPX\n\n')
+        del df_carteira['BVSPX'], df_cotacoes['BVSPX']
+    except:
+        print('\n\n\t\t DELETADO IBOV\n\n')
+        del df_carteira['IBOV'], df_cotacoes['IBOV']
 
     df_book_data['vol'] = df_book_data['vol'] * df_book_data['tipo'].replace({'Compra': 1, 'Venda': -1})
     df_book_data['date'] = pd.to_datetime(df_book_data.date)
@@ -83,3 +88,23 @@ except:
     df_book_data = pd.DataFrame(columns=columns)
 
 df_compra_e_venda = df_book_data.groupby('tipo').sum()
+
+
+
+def iterar_sobre_df_book(df_book_var: pd.DataFrame, ativos_org_var={}) -> dict:
+    for _, row in df_book_var.iterrows():
+        if not any(row['ativo'] in sublist for sublist in ativos_org_var):  
+            ativos_org_var[row["ativo"]] = row['exchange']
+    
+    ativos_org_var['IBOV'] = 'BMFBOVESPA'
+    return ativos_org_var 
+
+
+def atualizar_historical_data(df_historical_var: pd.DataFrame, ativos_org_var={}) -> pd.DataFrame:
+    tv = TvDatafeed()
+    for symb_dict in ativos_org_var.items():
+        new_line = tv.get_hist(*symb_dict, n_bars=5000)[['symbol','close']].reset_index()
+        df_historical_var = pd.concat([df_historical_var, new_line], ignore_index=True)
+
+    return df_historical_var.drop_duplicates(ignore_index=True)
+    
