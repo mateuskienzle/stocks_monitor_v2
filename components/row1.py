@@ -38,10 +38,10 @@ layout = dbc.Container([
                                 ], md=4, xs=3, style={'text-align': 'right'}),
                                 dbc.Col([
                                     
-                                ], md=5, xs=6, id='carteira_valor' ,style={'text-align': 'left'}),
+                                ], md=5, xs=6, id='carteira_valor', style={'text-align': 'left'}),
                                 dbc.Col([
-                                    html.H5([html.I(className='fa fa-angle-up'), "  ", " 7.19%"], className='textoQuartenarioVerde')
-                                ], md=3, xs=3, style={'text-align': 'left'})
+                                    
+                                ], md=3, xs=3, id='carteira_percent', style={'text-align': 'left'})
                             ]),
                             dbc.Row([
                                 dbc.Col([
@@ -170,6 +170,7 @@ def radar_graph(book_data, comparativo):
     Output('ibov_valor', 'children'),
     Output('ibov_percent', 'children'),
     Output('carteira_valor', 'children'),
+    Output('carteira_percent', 'children'),
     Output('cards_ativos', 'children'),
     State('historical_data_store', 'data'),
     Input('period_input', 'value'),
@@ -208,7 +209,12 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
     # print('CHEGOU AQUI')
     
 
-    
+    # {'CRFB3': 96,
+    # 'AZUL4': 636,
+    # 'TTEN3': 224,
+    # 'PETR4': 4500,
+    # 'HYPE3': 69,
+    # 'ALPA4': 250}
     # df_ibov = df_hist[df_hist['symbol'].str.contains(' '.join(['IBOV']))]
     # valor_atual_ibov = df_ibov['close'].iloc[-1]
     # diferenca_ibov = valor_atual_ibov/df_ibov['close'].iloc[0]
@@ -258,12 +264,12 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_caindo[0], seta_caindo[1]])
         else: 
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_crescendo[0], seta_crescendo[1]])
+    import pdb
+    # pdb.set_trace()
     
     # print('\n\nSALAH')
     # print(lista_valores_ativos)
-    import pdb
     # pdb.set_trace()
-
 
     # import pdb
     # pdb.set_trace()
@@ -323,6 +329,7 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
                     ], md=3, xs=12)
             
             lista_colunas.append(col)
+
     # else: 
     #     for i in range(4):
     #         col = dbc.Col([
@@ -355,21 +362,67 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
     
 
     valor_ibov = html.Legend(["",'{:,.2f}'.format(dfativos['Value0'].iloc[-1]), " "], className='textoQuartenario'),
-             
-    percent_ibov =  html.Legend([html.I(className=lista_valores_ativos[-1][3]), " ", '{:,.2f}'.format(dfativos['Value1'].iloc[-1]), "%"], className=lista_valores_ativos[-1][4])
 
+
+    ibov_percentual = dfativos['Value1'].iloc[-1]
+    if ibov_percentual < 0:
+        percent_ibov =  html.Legend([html.I(className=seta_caindo[0]), " ", '{:,.2f}'.format(ibov_percentual), "%"], className=seta_caindo[1])
+    else:
+         percent_ibov =  html.Legend([html.I(className=seta_crescendo[0]), " ", '{:,.2f}'.format(ibov_percentual), "%"], className=seta_crescendo[1])
     
+
     compra_e_venda = df_book.groupby('tipo')
+    # pdb.set_trace()
     df_compra_e_venda = compra_e_venda.sum()
     if 'Venda' in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
-        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
-    elif  'Venda' in compra_e_venda.groups and 'Compra' not in compra_e_venda.groups:   
-        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(-df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+        valor_carteira_original = df_compra_e_venda['valor_total']['Compra'] - df_compra_e_venda['valor_total']['Venda']
+    elif  'Venda' in compra_e_venda.groups and 'Compra' not in compra_e_venda.groups:
+        valor_carteira_original =  -df_compra_e_venda['valor_total']['Venda']  
     elif 'Venda' not in compra_e_venda.groups and 'Compra' in compra_e_venda.groups:
-        valor_carteira =  html.Legend("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
+        valor_carteira_original = df_compra_e_venda['valor_total']['Compra']
     else:
-        valor_carteira =  html.Legend("R$0.00", className='textoSecundario')
+        valor_carteira_original = "0.00"
 
+    # pdb.set_trace()
+
+   
+    df_tipo_e_ativo = df_book.groupby(['tipo', 'ativo'])
+    df_tipo_e_ativo_soma = df_tipo_e_ativo.sum()
+
+    #verificando a quantidade de cada ativo que existe comprada na wallet
+    lista_ativos = df_book['ativo'].unique()
+    resultado = {}
+    for ativo in lista_ativos:
+        try:
+            compra = df_tipo_e_ativo_soma['vol']['Compra'][ativo]
+            venda = df_tipo_e_ativo_soma['vol']['Venda'][ativo]
+            if compra > venda:
+                qtd = compra - venda
+                resultado[ativo] = qtd
+        except:
+            try:
+                qtd = df_tipo_e_ativo_soma['vol']['Compra'][ativo]
+                resultado[ativo] = qtd
+            except:
+                pass
+    
+    valor_total = 0
+    for ativo, qtd in resultado.items():
+        for id, ativos in enumerate(lista_valores_ativos):
+            if ativo == ativos[0]:
+                total = qtd * ativos[1]
+                valor_total += total
+
+    varicao_carteira = valor_total/float(valor_carteira_original)
+    varicao_carteira_configurado = valor_total/float(valor_carteira_original)*100 - 100
+    # pdb.set_trace()
+
+    valor_carteira_atual =  html.Legend("R$" + '{:,.2f}'.format(valor_carteira_original*varicao_carteira), className='textoSecundario')
+
+    if varicao_carteira < 0:
+        percentual_carteira =  html.Legend([html.I(className=seta_caindo[0]), " ", '{:,.2f}'.format(varicao_carteira_configurado), "%"], className=seta_caindo[1])
+    else:
+         percentual_carteira =  html.Legend([html.I(className=seta_crescendo[0]), " ", '{:,.2f}'.format(varicao_carteira_configurado), "%"], className=seta_crescendo[1])
     # pdb.set_trace()
     # print('\n\n TA AQUIIIIIIIII')
     # print(df_compra_e_venda['valor_total']['Compra'])
@@ -377,9 +430,9 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
         
     # except:
     #     if df_compra_e_venda['valor_total']['Compra'] == None:
-    #         valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
+    #         valor_carteira_original =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Venda']), className='textoSecundario')
     #     elif df_compra_e_venda['valor_total']['Venda'] == None:
-    #         valor_carteira =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
+    #         valor_carteira_original =  html.H5("R$" + '{:,.2f}'.format(df_compra_e_venda['valor_total']['Compra']), className='textoSecundario')
     #     else:
             
         
@@ -388,5 +441,6 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
     # print(df_book)
 
     # pdb.set_trace()
+    # pdb.set_trace()
                  
-    return valor_ibov, percent_ibov, valor_carteira, card_ativos
+    return valor_ibov, percent_ibov, valor_carteira_atual, percentual_carteira, card_ativos

@@ -12,10 +12,15 @@ from datetime import date
 import json
 
 from app import *
-from yfinance_class.y_class import Asimov_finance
 from components.modal_adicao import *
 
-financer = Asimov_finance()
+# from functions import *
+
+from tvDatafeed import TvDatafeed, Interval
+
+tv = TvDatafeed()
+
+# financer = Asimov_finance()
 
 HEIGHT={'height': '100%'}
 
@@ -190,8 +195,11 @@ def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol
             return [open, book_data, lista_de_cards]
         else:
             ativo = ativo.upper()
-            ticker = financer.get_symbol_object(ativo)
-            if ticker:
+            # ticker = financer.get_symbol_object(ativo)
+            
+            # import pdb
+            # pdb.set_trace()
+            if tv.search_symbol(ativo,'BMFBOVESPA'):
                 exchange = 'BMFBOVESPA'
                 preco = round(preco, 2)
                 df_book_data.loc[len(df_book_data)] = [periodo, preco, radio, ativo, exchange ,vol, vol*preco]    

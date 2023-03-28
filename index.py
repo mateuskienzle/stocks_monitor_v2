@@ -5,7 +5,6 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 from datetime import datetime, date
-import yfinance as yf
 
 from app import *
 from components import home, header, wallet, row1
@@ -60,7 +59,7 @@ app.layout = dbc.Container([
                 dbc.Col([
                    row1.layout
                 ]),
-            ]),
+                ]),
             dbc.Row([
                 dbc.Col([
                     # toast
