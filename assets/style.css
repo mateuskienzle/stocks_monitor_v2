@@ -181,13 +181,13 @@ h5 {
 } */
 
 .card_compra{
-    border-left-width: 15px;
+    border-left-width: 10px;
     border-left-color: rgba(8,180,164,1);
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
 .card_venda{
-    border-left-width: 15px;
+    border-left-width: 10px;
     border-left-color: rgba(255,0,0, 0.7);
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
