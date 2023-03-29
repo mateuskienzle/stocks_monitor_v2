@@ -1,26 +1,14 @@
-from dash import html, dcc, no_update, callback_context
+from dash import html, callback_context
 from dash.dependencies import Input, Output, State, ALL
-import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-
-from pandas.tseries.offsets import DateOffset
-from datetime import date
 import json
+from tvDatafeed import TvDatafeed
 
-from app import *
 from components.modal_adicao import *
-
-# from functions import *
-
-from tvDatafeed import TvDatafeed, Interval
+from app import *
 
 tv = TvDatafeed()
-
-# financer = Asimov_finance()
 
 HEIGHT={'height': '100%'}
 
@@ -81,9 +69,6 @@ def generate_card(info_do_ativo):
 
     return new_card
 
-
-
-
 def generate_list_of_cards(df):
     lista_de_dicts = []
     for row in df.index:
@@ -102,22 +87,16 @@ def generate_list_of_cards(df):
         lista_de_cards.append(card)
     return lista_de_cards
 
-
-
-
-
 layout = dbc.Container([
-
     dbc.Row([
         dbc.Col([
     
         ], md=12, id='layout_wallet', style={"height": "100%", "maxHeight": "36rem", "overflow-y": "auto"})
     ], className='g-2 my-auto')
-
-    
 ],fluid=True),
 
-
+# Callbacks =======================
+#call back auxiliar para ativar o layout da wallet
 @app.callback(
     Output('layout_wallet', 'children'),
     Input('layout_data', 'data')
@@ -125,13 +104,9 @@ layout = dbc.Container([
 def test1(data):
     return data
 
+#callback que realiza alterações nos ativos da wallet
 @app.callback(
     Output('modal', 'is_open'),
-    # Output("positioned_toast", "is_open"),
-    # Output('positioned_toast', 'header'),
-    # Output('positioned_toast', 'children'),
-    # Output('positioned_toast', 'icon'),
-    # Output('imagem_ativo', 'src'),
     Output('book_data_store', 'data'),
     Output ('layout_data', 'data'),
 
@@ -149,40 +124,16 @@ def test1(data):
 )
 def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol):
     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
-    # print('TRIGG_ID', trigg_id)
-    # print('OPT4', callback_context.triggered[0])    # dict['value'] == None -> ignorar
-                                                    # dict['value'] != None -> clicado
-
-    # return_default = ['', '' , '']
-    # return_fail_inputs = ['Não foi possível registrar a sua ação!', 
-    #                 'É necessário preencher todos os campos do Formulário.',
-    #                 'primary']
-    # return_fail_ticker = return_fail_inputs.copy()
-    # return_fail_ticker[1] = 'É necessário inserir um Ticker válido.'
-    # return_compra = ['Confirmação de Adição', 'Registro de COMPRA efetivado!', 'success']
-    # return_venda =  ['Confirmação de Remoção', 'Registro de VENDA efetivado!', 'warning']
     
     df_book_data = pd.DataFrame(book_data)
     df_book_data = df_book_data.sort_values(by='date', ascending=True)
 
-
-
     lista_de_cards = generate_list_of_cards(df_book_data)
+    #verifica se nao tem nenhum ativo na lista de cards, caso nao tiver nada retorna o card com a msg 'nenhum registro efetuado'
     if len(lista_de_cards) == 0:
         lista_de_cards = card_sem_registros
-    # elif lista_de_cards.children[0].children[0].children == 'Nenhum registro efetuado':
-    #     lista_de_cards = card_sem_registros
-
-    # import pdb
-    # pdb.set_trace()
-    # Casos de trigg
-    # 0. Trigg automático
     if trigg_id == '':
         df_book_data = df_book_data.sort_values(by='date', ascending=True)
-        # df.to_csv('book_data.csv')
-        # data = df.to_dict()
-        
-        # lista_de_cards = generate_list_of_cards(df)
         return [open, book_data, lista_de_cards]
 
     # 1. Botão de abrir modal
@@ -195,10 +146,6 @@ def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol
             return [open, book_data, lista_de_cards]
         else:
             ativo = ativo.upper()
-            # ticker = financer.get_symbol_object(ativo)
-            
-            # import pdb
-            # pdb.set_trace()
             if tv.search_symbol(ativo,'BMFBOVESPA'):
                 exchange = 'BMFBOVESPA'
                 preco = round(preco, 2)
@@ -212,9 +159,8 @@ def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol
                 
                 lista_de_cards = generate_list_of_cards(df_book_data)
 
-                print(book_data)
-
                 return [not open, book_data, lista_de_cards]
+
             else:   
                 return [not open, book_data, lista_de_cards]
 
@@ -225,22 +171,14 @@ def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol
         if trigg_dict['value'] == None:
             return [open, book_data, lista_de_cards]
 
-        # else:
         trigg_id = json.loads(trigg_id)
-        # print('\n\nERRO AQUII')
-        # print(trigg_id)
-        # print(df)
-        # import pdb
-        # pdb.set_trace()
         df_book_data.drop([str(trigg_id['index'])], inplace=True)
         df_book_data.reset_index(drop=True, inplace=True)
         df_book_data = df_book_data.sort_values(by='date', ascending=True)
         df_book_data.to_csv('book_data.csv')
         book_data = df_book_data.to_dict()
-        # data = df.to_dict()
-        # print('\n\nLEITADA')
-        # print(data)
         lista_de_cards = generate_list_of_cards(df_book_data)
+
         if len(lista_de_cards) == 0:
             lista_de_cards = card_sem_registros
 

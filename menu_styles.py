@@ -25,15 +25,12 @@ HOVER_LINE_GRAPH = {
         "bgcolor":"rgba(32, 36, 73, 0.7)",
         "font" : {'color':COR_LEGENDA}
 }
-# PREENCHIMENTO_LINE_GRAPH = 'rgba(178, 45, 178, 0.1)'
+#PREENCHIMENTO_LINE_GRAPH = 'rgba(178, 45, 178, 0.1)'
 
+#cards row1
+CARD_GRAPHS_LINE_COLOR = 'rgba(178, 45, 178, 0.5)'
 
-
-
-
-
-
-HEIGHT={'height': '100%'}
+#confis
 MAIN_CONFIG = {
     "hovermode": "x unified",
     "legend": {"yanchor":"top", 
@@ -45,6 +42,7 @@ MAIN_CONFIG = {
     "font" : {'color': COR_LEGENDA},
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
+
 MAIN_CONFIG_2 = {
     "hovermode": "x unified",
     "legend": {"yanchor":"top", 
@@ -56,7 +54,6 @@ MAIN_CONFIG_2 = {
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 
-
 MAIN_CONFIG_3 = {
     # "hovermode": "x unified",
     "legend": {"bgcolor": 'rgba(0,0,0,0)'},
@@ -64,4 +61,5 @@ MAIN_CONFIG_3 = {
     "margin": {"l":0, "r":0, "t":0, "b":0},
 }
 
-CARD_GRAPHS_LINE_COLOR = 'rgba(178, 45, 178, 0.5)'
+
+HEIGHT={'height': '100%'}

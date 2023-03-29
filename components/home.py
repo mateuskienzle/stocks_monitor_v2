@@ -1,32 +1,22 @@
-from dash import html, dcc, Input, Output, State, no_update, callback_context
-import dash
+from dash import dcc, Input, Output, State, no_update
 import dash_bootstrap_components as dbc
 import pandas as pd
-import numpy as np
-import plotly.express as px
 import plotly.graph_objects as go
 
-from pandas.tseries.offsets import DateOffset
-from datetime import date
-
-from app import *
 from menu_styles import *
 from functions import *
+from app import *
 
 
 layout = dbc.Container([
-
     dbc.Row([
         dbc.Col([
             dcc.Graph(id='line_graph', config={"displayModeBar": False, "showTips": False}, className='graph_line')    
             ], xs=12, md=12,)
-
     ])
 ], fluid=True)
 
-
 # =========  Callbacks  =========== #
-
 # callback line graph
 @app.callback(
     Output('line_graph', 'figure'),
@@ -37,7 +27,6 @@ layout = dbc.Container([
     State('historical_data_store', 'data'),
 )
 def func_card1(dropdown, period, profit_switch, book_info, historical_info):
-    # import pdb; pdb.set_trace()
     if dropdown == None:
         return no_update
     if type(dropdown) != list: dropdown = [dropdown]
@@ -51,8 +40,6 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
 
     if profit_switch:
         df_hist = df_hist[df_hist['symbol'].str.contains('|'.join(dropdown))]
-        # import pdb
-        # pdb.set_trace()
         for n, ticker in enumerate(dropdown):
             df_aux = df_hist[df_hist.symbol.str.contains(ticker)]
             df_aux.dropna(inplace=True)
@@ -70,8 +57,6 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
 
         fig.add_trace(go.Scatter(x=df_patrimonio.index, y=(df_patrimonio['evolucao_cum']- 1) * 100, mode='lines', name='Evolução Patrimonial', line=dict(color=LINHA_EVOLUCAO_PATRIMONIAL)))
     
-        
-    
     fig.update_layout(MAIN_CONFIG_2, showlegend=True, yaxis={'ticksuffix': '%'}, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', hoverlabel=HOVER_LINE_GRAPH)
     fig.update_xaxes(tickfont=dict(family='Nexa', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE)
     fig.update_yaxes(tickfont=dict(family='Nexa', size=AXIS_FONT_SIZE, color=AXIS_VALUES_COLOR), gridcolor=LINHAS_DE_GRADE, zerolinecolor=LINHA_ZERO_X)
@@ -87,12 +72,9 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
 def atualizar_dropdown(book):
     df = pd.DataFrame(book)
     unique = df['ativo'].unique()
-    # import pdb
-    # pdb.set_trace()
     try:
        dropdown = [unique[0], [{'label': x, 'value': x} for x in unique]]
     except:
         dropdown = ['', [{'label': x, 'value': x} for x in unique]]
     
     return dropdown
-

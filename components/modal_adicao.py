@@ -1,15 +1,8 @@
-from dash import html, dcc, Input, Output, State, no_update, callback_context
+from dash import dcc, Input, Output, no_update, callback_context
 import dash_bootstrap_components as dbc
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-import time
-from datetime import datetime, date
-
-from app import *
-
 from datetime import date
 
+from app import *
 
 layout = dbc.Modal([
     dbc.ModalHeader(dbc.ModalTitle("Cadastro de ativos"), className='modal_header'),
@@ -21,7 +14,6 @@ layout = dbc.Modal([
             dbc.Col([
                 dbc.Input(id="preco_ativo", placeholder="Preço (R$)", type='number', min=0, step=0.01)
             ])
-
         ]),
         dbc.Row([
             dbc.Col([
@@ -40,9 +32,6 @@ layout = dbc.Modal([
             ], xs=6, md=6)
         ], style={'margin-top' : '1rem'}),
         dbc.Row([
-            # dbc.Col([
-            #     html.Img(id='imagem_ativo', src="https://petrobras.com.br/sitepetrobras/imgs/bg/logo-social.png", style={'width' : '30%', 'margin-top' : '1rem', 'border-radius' : '15%'})
-            # ]),
             dbc.Col([
                 dbc.RadioItems(id='compra_venda_radio', options=[{"label": "Compra", "value": 'Compra'}, {"label": "Venda", "value": 'Venda'}], value='Compra'),
             ], style ={'padding-top' : '20px'}),
@@ -58,14 +47,13 @@ layout = dbc.Modal([
 
 
 # Callbacks =======================
-# Callback para checar o loading state -----
+# Callback para checar o loading state
 @app.callback(
     Output('submit_cadastro', 'children'),
-
     Input('submit_cadastro', 'n_clicks'),
     Input('add_button', 'n_clicks'),
-    # Input('positioned_toast', 'icon'),
 )
+
 def add_spinner(n, n2):
     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
 
@@ -75,24 +63,3 @@ def add_spinner(n, n2):
         return "Salvar"
     else:
         return no_update
-
-# Callback para limpar infos do modal -----
-# @app.callback(
-#     Output('nome_ativo', 'value'),
-#     Output('preco_ativo', 'value'),
-#     Output('data_ativo', 'date'),
-#     Output('quantidade_ativo', 'value'),
-
-#     Input('positioned_toast', 'header')
-# )
-# def reset_data_modal(icon):
-#     trigg_id = callback_context.triggered[0]['prop_id'].split('.')[0]
-
-#     if trigg_id != 'positioned_toast':
-#         return no_update
-#     else:
-#         if "Confirmação" in icon:
-#             return [None, None, date.today(), None]
-#         else:
-#             return no_update
-    
