@@ -243,12 +243,6 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
         dict_valores[key] = valor_atual, diferenca_periodo
         dfativos= pd.DataFrame(dict_valores).T.rename_axis('ticker').add_prefix('Value').reset_index()
         dfativos['Value1']= dfativos['Value1']*100 - 100
-
-    # pdb.set_trace()
-    
-    # import pdb
-    # # pdb.set_trace()
-
     
     seta_crescendo = ['fa fa-angle-up', 'textoQuartenarioVerde',]
     seta_caindo = ['fa fa-angle-down', 'textoQuartenarioVermelho']
@@ -264,15 +258,6 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_caindo[0], seta_caindo[1]])
         else: 
             lista_valores_ativos.append([tag_ativo, valor_ativo, variacao_ativo, seta_crescendo[0], seta_crescendo[1]])
-    import pdb
-    # pdb.set_trace()
-    
-    # print('\n\nSALAH')
-    # print(lista_valores_ativos)
-    # pdb.set_trace()
-
-    # import pdb
-    # pdb.set_trace()
 
     #Graficos
     
@@ -413,13 +398,18 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
                 total = qtd * ativos[1]
                 valor_total += total
 
-    varicao_carteira = valor_total/float(valor_carteira_original)
-    varicao_carteira_configurado = valor_total/float(valor_carteira_original)*100 - 100
+    if valor_carteira_original == "0.00":
+        valor_carteira_original = 0
+        varicao_carteira = 0
+        varicao_carteira_configurado = 0
+    else:
+        varicao_carteira = valor_total/float(valor_carteira_original)
+        varicao_carteira_configurado = valor_total/float(valor_carteira_original)*100 - 100
     # pdb.set_trace()
 
     valor_carteira_atual =  html.Legend("R$" + '{:,.2f}'.format(valor_carteira_original*varicao_carteira), className='textoSecundario')
 
-    if varicao_carteira < 0:
+    if varicao_carteira < 1:
         percentual_carteira =  html.Legend([html.I(className=seta_caindo[0]), " ", '{:,.2f}'.format(varicao_carteira_configurado), "%"], className=seta_caindo[1])
     else:
          percentual_carteira =  html.Legend([html.I(className=seta_crescendo[0]), " ", '{:,.2f}'.format(varicao_carteira_configurado), "%"], className=seta_crescendo[1])
