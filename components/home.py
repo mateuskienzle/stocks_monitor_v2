@@ -26,7 +26,7 @@ layout = dbc.Container([
     Input('book_data_store', 'data'),
     State('historical_data_store', 'data'),
 )
-def func_card1(dropdown, period, profit_switch, book_info, historical_info):
+def line_graph(dropdown, period, profit_switch, book_info, historical_info):
     if dropdown == None:
         return no_update
     if type(dropdown) != list: dropdown = [dropdown]
@@ -69,7 +69,7 @@ def func_card1(dropdown, period, profit_switch, book_info, historical_info):
     Output('dropdown_card1', 'options'),
     Input('book_data_store', 'data'),
 )
-def atualizar_dropdown(book):
+def update_dropdown(book):
     df = pd.DataFrame(book)
     unique = df['ativo'].unique()
     try:
