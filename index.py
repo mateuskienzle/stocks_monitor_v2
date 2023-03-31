@@ -3,7 +3,7 @@ from dash.dependencies import Input, Output, State, ALL
 import dash_bootstrap_components as dbc
 import pandas as pd
 
-from components import home, header, wallet, row1
+from components import home, header, wallet, fixed_row
 from functions import *
 from app import *
 
@@ -20,8 +20,7 @@ except: # caso não exista, criar df
 try:
     df_historical_data = pd.read_csv('historical_data.csv', index_col=0)
 except:
-    columns = ['datetime', 'symbol', 'close']
-    df_historical_data = pd.DataFrame(columns=columns)
+    df_historical_data = pd.DataFrame(columns=['datetime', 'symbol', 'close'])
 
 df_historical_data = atualizar_historical_data(df_historical_data, ativos_org)
 
@@ -42,7 +41,7 @@ app.layout = dbc.Container([
             ]),
             dbc.Row([
                 dbc.Col([
-                   row1.layout
+                   fixed_row.layout
                 ]),
             ]),
             dbc.Row([

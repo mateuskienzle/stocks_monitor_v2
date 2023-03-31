@@ -114,10 +114,10 @@ def radar_graph(book_data, switch):
     df_registros['vol'] = abs(df_registros['vol']) * df_registros['tipo'].replace({'Compra': 1, 'Venda': -1})
     
     if switch:
-        df_provisorio = df_ibov[df_ibov['Código'].isin(df_registros['ativo'].unique())]
-        df_provisorio['Participação2'] = df_provisorio['Participação'].apply(lambda x: x*100/df_provisorio['Participação'].sum())
+        df_ibov_prop = df_ibov[df_ibov['Código'].isin(df_registros['ativo'].unique())]
+        df_ibov_prop['Proporcao'] = df_ibov_prop['Participação'].apply(lambda x: x*100/df_ibov_prop['Participação'].sum())
 
-        ibov_setor = df_provisorio.groupby('Setor')['Participação2'].sum()
+        ibov_setor = df_ibov_prop.groupby('Setor')['Proporcao'].sum()
 
         df_registros = df_registros[df_registros['ativo'].isin(df_ibov['Código'].unique())]
         df_registros['Participação'] = df_registros['vol'].apply(lambda x: x*100/df_registros['vol'].sum())
@@ -126,7 +126,7 @@ def radar_graph(book_data, switch):
         df_registros = pd.DataFrame(df_registros).reset_index()
 
         try:
-            df_registros['setores'] = np.concatenate([df_provisorio[df_provisorio['Código'] == ativo]['Setor'].values for ativo in df_registros['ativo']])
+            df_registros['setores'] = np.concatenate([df_ibov_prop[df_ibov_prop['Código'] == ativo]['Setor'].values for ativo in df_registros['ativo']])
         except:
             df_registros['setores'] = 'Sem registros'
   
@@ -162,7 +162,7 @@ def radar_graph(book_data, switch):
     Input('book_data_store', 'data'),
 )
 
-def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
+def update_cards_ativos(historical_data, period, dropdown, book_data):
 
     if dropdown == None:
         return no_update
@@ -177,16 +177,20 @@ def atualizar_cards_ativos(historical_data, period, dropdown, book_data):
     df2 = df_book.groupby(by=['ativo', 'tipo'])['vol'].sum()
 
     diferenca_ativos = {}
+    # agrupa os dados por valores únicos na primeira coluna do índice (level = 0)
     for ativo, new_df in df2.groupby(level=0):
         compra, venda = 0, 0
         try:
+            #salva os valores da linha dos ativos que tem 'compra'
             compra = new_df.xs((ativo, 'Compra'))
         except: pass
         try:
+            #salva os valores da linha dos ativos que tem 'venda'
             venda = new_df.xs((ativo, 'Venda'))
         except: pass
         diferenca_ativos[ativo] = compra - venda
 
+    #adiciona em um dicionario somente os ativos existentes na carteira
     ativos_existentes = dict((k, v) for k, v in diferenca_ativos.items() if v >= 0)
     ativos_existentes['IBOV'] = 1 #botei 1 pq era só pra adicionar um valor qualquer, o que importa é a chave 'IBOV'
 

@@ -1,3 +1,4 @@
+/*Imports das fontes de textos*/
 @font-face {
     font-family: 'Nexa';
     src: url('nexa-extralight.ttf') format('truetype'),
@@ -5,7 +6,7 @@
        url('nexa-extralight.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
 @font-face {
     font-family: 'NexaRegular';
     src: url('nexa-regular.otf') format('truetype'),
@@ -13,12 +14,14 @@
        url('nexa-regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
 
+/*Estilização do background do dashboard*/
 body{
     background: linear-gradient(#100731, #100731, #0E112D, #0E112D) fixed;
 }
 
+/*Estilização do header*/
 .header_icon{
     background-color : transparent;
     border-color : transparent;
@@ -34,7 +37,7 @@ body{
     border-color: transparent;
 }
 
-/*Estilização dos cards*/
+/*Estilização dos cards da fixed_row*/
 .card1_linha1{
     background-color: transparent;
     color: rgba(255,255,255,1);;
@@ -99,13 +102,11 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     color: white;
     font-family: NexaRegular;
 }
-
 .textoSecundario{
     font-size: 1.8rem;
     color: white;
     font-family: NexaRegular;
 }
-
 .textoTerciario{
     font-size: 1.4rem;
     color: white;
@@ -115,7 +116,6 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     font-size: 1.4rem;
     color: white;
 }
-
 .textoQuartenario{
     font-size: 1.2rem;
     color: rgba(255,255,255,0.4);
@@ -138,10 +138,11 @@ Até daria pra alterar algumas caracteristicas do dropdown diretamente no dcc.dr
     color: rgba(255,0,0, 0.7);
     font-family: Nexa;
 }
-
 h5 {
     display: inline;
 }
+
+/* Estilização graph line*/
 .graph_line{
     height: 530px;
 }
@@ -149,6 +150,7 @@ h5 {
     height: 40px;
 }
 
+/* Estilização dos cards da wallet*/
 .card_compra{
     border-left-width: 10px;
     border-left-color: rgba(8,180,164,1);
@@ -204,7 +206,6 @@ h5 {
     border-color: #343b3e;
     border-width: 1px;
 }
-
 #submit_cadastro{
     background-color: rgba(178, 45, 178, 1);
     border-color: transparent;

@@ -24,21 +24,18 @@ df_ibov['Setor'] = df_ibov['Setor'].apply(lambda x: x.split('/')[0].rstrip())
 df_ibov['Setor'] = df_ibov['Setor'].apply(lambda x: 'Cons N Cíclico' if x == 'Cons N Ciclico' else x)
 
 def definir_evolucao_patrimonial(df_historical_data: pd.DataFrame, df_book_data: pd.DataFrame) -> pd.DataFrame:
-    import pdb
-    pdb.set_trace()
 
     #altera os indices do dataframe para as datas de cada linha
     df_historical_data = df_historical_data.set_index('datetime')
-    #adiciona uma nova coluna chamada date, que pega a data que está no index e a transforma para dados do tipo date (geralmente vem como timestamp, datetime, string etc.)
+    #adiciona uma nova coluna chamada date, que pega a data que está no index e a transforma para dados do tipo date (geralmente vem como timestamp, datetime,
+    # string etc.)
     df_historical_data['date'] = df_historical_data.index.date
-    # agrupa o df pelas duas colunas "date" e "symbol" e, em seguida, calcula o último valor da coluna "close" para cada grupo formado pelas duas colunas de agrupamento.
-    #O método "to_frame()" converte a série resultante em um DataFrame e o método "reset_index()" redefine os índices do DataFrame para começar em zero
+    # agrupa o df pelas duas colunas "date" e "symbol" e, em seguida, pega o último valor da coluna "close" para cada grupo formado pelas duas colunas do 
+    # agrupamento. O método "to_frame()" converte a série resultante em um DataFrame e o método "reset_index()" redefine os índices do DataFrame para começar em zero
     df_historical_data = df_historical_data.groupby(['date', 'symbol'])['close'].last().to_frame().reset_index()
-    #faz um pivot tale para agrupar o dataframe em colunas de acordo com o 'symbol' de cada uma delas, que é basicamente agrupar as colunas por cada ativo,
+    #faz um pivot table para agrupar o dataframe em colunas de acordo com o 'symbol' de cada uma delas, que é basicamente agrupar as colunas por cada ativo,
     #utilizando como dados os valores de 'cole' e o index como 'date'
     df_historical_data = df_historical_data.pivot(values='close', columns='symbol', index='date')
-
-    pdb.set_trace()
 
     #cria dois dataframes auxiliares iguais ao dataframe da etapa anterior
     df_cotacoes = df_historical_data.copy()
@@ -82,16 +79,22 @@ def definir_evolucao_patrimonial(df_historical_data: pd.DataFrame, df_book_data:
     # cria um novo DataFrame que contém a quantidade de ações que cada ativo tem na carteira
     df_ops = df_carteira - df_carteira.shift(1)
     #multiplica os valores pelos valores das cotações atuais de cada ativo
-    #basicamente nesse dataframe eu vamos ter o valor atualizada de cada ação, de acordo com o preço atual de cada ativo baseado na quantidade que existe comprada na
+    #basicamente nesse dataframe vamos ter o valor atualizada de cada ação, de acordo com o preço atual de cada ativo baseado na quantidade que existe comprada na
     #carteira do usuario
     df_ops = df_ops * df_cotacoes
     
+    #cria uma nova coluna chamada evolucao patrimonial no df onde vamos pegar as diferenças dos valores da coluna soma entre datas adjacentes e diminuir dos valores
+    #do df que contem as os valores de todas as açoes da carteira
     df_patrimonio['evolucao_patrimonial'] = df_patrimonio['soma'].diff() - df_ops.sum(axis=1)           # .plot()
+    # e aqui realizamos a divisão para ver o percentual, armazenando esse valor em uma nova coluna chamada evolucao percentual
     df_patrimonio['evolucao_percentual'] = (df_patrimonio['evolucao_patrimonial'] / df_patrimonio['soma'])
 
+    # cria uma lista chamada ev_total_list com o mesmo comprimento do DataFrame df_patrimonio e preenche todos os elementos da lista com o valor 1. vamos usar
+    # esses valores de 1 justamente para incrementar ou decrementar o percentual da variacao de cada açao
     ev_total_list = [1]*len(df_patrimonio)
     df_patrimonio['evolucao_percentual'] = df_patrimonio['evolucao_percentual'].fillna(0)
     
+    # calcula uma nova coluna "evolucao_cum" que armazena o valor acumulado da evolução percentual.
     for i, x in enumerate(df_patrimonio['evolucao_percentual'].to_list()[1:]):
         ev_total_list[i+1] = ev_total_list[i] * (1 + x)
         df_patrimonio['evolucao_cum'] = ev_total_list

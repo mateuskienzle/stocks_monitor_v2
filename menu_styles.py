@@ -19,18 +19,18 @@ AXIS_FONT_SIZE = 20
 AXIS_VALUES_COLOR = 'white'
 LINHAS_DE_GRADE = 'rgba(255,255,255,0.1)'
 LINHA_ZERO_X = 'rgba(255,255,255,0.2)'
-LINHA_EVOLUCAO_PATRIMONIAL = '#b22db2' 
-LISTA_DE_CORES_LINHAS = ['#b22db2', 'rgba(76,0,176,0.4)' , 'rgba(103,0,103,0.4)', 'rgba(138,0,176,0.4)', 'rgba(87,53,106,0.4)', 'rgba(177,0,205,0.4)', 'rgba(190,46,214,0.4)', 'white']
+LINHA_EVOLUCAO_PATRIMONIAL = 'rgba(178, 45, 178, 1)' 
+LISTA_DE_CORES_LINHAS = ['rgba(178, 45, 178, 1)', 'rgba(76,0,176,0.4)', 'rgba(138,0,176,0.4)', 'rgba(103,0,103,0.4)', 'rgba(87,53,106,0.4)', 'rgba(177,0,205,0.4)', 'rgba(190,46,214,0.4)', 'white']
 HOVER_LINE_GRAPH = {
         "bgcolor":"rgba(32, 36, 73, 0.7)",
         "font" : {'color':COR_LEGENDA}
 }
 #PREENCHIMENTO_LINE_GRAPH = 'rgba(178, 45, 178, 0.1)'
 
-#cards row1
+#cards fixed_row
 CARD_GRAPHS_LINE_COLOR = 'rgba(178, 45, 178, 0.5)'
 
-#confis
+#radar graph
 MAIN_CONFIG = {
     "hovermode": "x unified",
     "legend": {"yanchor":"top", 
@@ -43,6 +43,7 @@ MAIN_CONFIG = {
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 
+#line graph
 MAIN_CONFIG_2 = {
     "hovermode": "x unified",
     "legend": {"yanchor":"top", 
@@ -54,6 +55,7 @@ MAIN_CONFIG_2 = {
     "margin": {"l":0, "r":0, "t":10, "b":0},
 }
 
+#cards graph
 MAIN_CONFIG_3 = {
     # "hovermode": "x unified",
     "legend": {"bgcolor": 'rgba(0,0,0,0)'},

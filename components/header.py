@@ -1,11 +1,11 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from components import modal_adicao
+from components import modal
 
 layout = dbc.Container([
     dbc.Row([
-    modal_adicao.layout,
+    modal.layout,
         dbc.Col([
             dbc.Button("Home", href='/home', className='header_icon')
         ], md=1,xs=4), 

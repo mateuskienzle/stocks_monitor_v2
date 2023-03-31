@@ -5,12 +5,10 @@ import pandas as pd
 import json
 from tvDatafeed import TvDatafeed
 
-from components.modal_adicao import *
+from components.modal import *
 from app import *
 
 tv = TvDatafeed()
-
-HEIGHT={'height': '100%'}
 
 card_sem_registros = dbc.Card([
                         dbc.CardBody([
@@ -38,7 +36,6 @@ def generate_card(info_do_ativo):
                                     dbc.Col([
                                         html.H5([html.I(className='fa fa-money', style={"fontSize": '85%'}), " Unitário: "], className='textoQuartenario'),
                                         html.H5('{:,.2f}'.format(info_do_ativo['preco']), className='textoQuartenarioBranco')
-                                        # " Valor unitário: R$" + '{:,.2f}'.format(info_do_ativo['preco'])
                                     ], md=2, style={'text-align' : 'left'}),
                                     dbc.Col([
                                         html.H5([html.I(className='fa fa-calendar', style={"fontSize": '85%'}), " Data: "], className='textoQuartenario'),
@@ -101,7 +98,7 @@ layout = dbc.Container([
     Output('layout_wallet', 'children'),
     Input('layout_data', 'data')
 )
-def test1(data):
+def func_auxiliar(data):
     return data
 
 #callback que realiza alterações nos ativos da wallet
@@ -168,6 +165,7 @@ def func_modal(n1, n2, book_data, event, ativo, open, radio, preco, periodo, vol
     if 'delete_event' in trigg_id:
         trigg_dict = callback_context.triggered[0]
 
+        #verifica se nao foi clicado na atualização inicial do callback para nao deletar nenhum card
         if trigg_dict['value'] == None:
             return [open, book_data, lista_de_cards]
 
