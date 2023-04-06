@@ -206,6 +206,7 @@ def update_cards_ativos(historical_data, period, dropdown, book_data):
         df_auxiliar = (df_hist[df_hist.symbol.str.contains(key)])
         df_auxiliar['datetime'] = pd.to_datetime(df_auxiliar['datetime'], format='%Y-%m-%d %H:%M:%S')
         df_periodo = df_auxiliar[df_auxiliar['datetime'] > correct_timedelta]
+        # import pdb; pdb.set_trace()
         valor_atual = df_periodo['close'].iloc[-1]
         diferenca_periodo= valor_atual/df_periodo['close'].iloc[0]
         dict_valores[key] = valor_atual, diferenca_periodo
